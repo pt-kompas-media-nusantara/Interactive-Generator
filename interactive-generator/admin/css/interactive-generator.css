@@ -1,0 +1,14 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+ .galleryGenerator{
+   position: relative;
+   width: 100%;
+   overflow: hidden;
+   margin-top: 50px;
+ }
+ .show{
+   opacity: 1 !important;
+ }
+ 
