@@ -111,7 +111,7 @@
                 </form>
             </div>
             <div class="w-6/12">
-                <div id="pieresult" class="sticky top-0 pt-2"></div>
+                <div id="pieresult" class="sticky top-0 pt-2" style="top: 62px;"></div>
             </div>
         </div>
     </div>
