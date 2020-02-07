@@ -70,7 +70,8 @@ new Vue({
 			this.showResult = true;
 			this.getInput();
 			var data = '',
-					idGallery = this.$refs.inputId.value.split(' ').join('-');
+					idGallery = this.$refs.inputId.value.split(' ').join('-'),
+					titleGallery = this.$refs.inputId.value;
 			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
 				if(i == document.getElementsByClassName('inputUrl').length-1){
 					data += "{'url': '"+ this.valUrl[i] +"', 'title': '"+ this.valTitle[i] +"','credit': '"+ this.valCredit[i] +"','text': '"+ this.valText[i] +"'}"
@@ -78,7 +79,7 @@ new Vue({
 					data += "{'url': '"+ this.valUrl[i] +"', 'title': '"+ this.valTitle[i] +"','credit': '"+ this.valCredit[i] +"','text': '"+ this.valText[i] +"'},"
 				}
 			}
-			var shortcode = "[GallerySlide name=\""+ idGallery.toLowerCase() +"\" inview=\""+ this.$refs.inputView.value +"\" data=\""+ data +"\"/]";
+			var shortcode = "[GallerySlide name=\""+ idGallery.toLowerCase() +"\" inview=\""+ this.$refs.inputView.value +"\" data=\""+ data +"\" title=\""+ titleGallery +"\"/]";
 			this.$refs.inputResult.value = shortcode;
 		},
 		getInputTimeline(){
@@ -99,7 +100,8 @@ new Vue({
 			this.showResult = true;
 			this.getInputTimeline();
 			var data = '',
-					idGallery = this.$refs.inputId.value.split(' ').join('-');
+					idTimeline = this.$refs.inputId.value.split(' ').join('-'),
+					titleTimeline = this.$refs.inputId.value;
 			for(var i=0;i<document.getElementsByClassName('inputDate').length;i++){
 				if(i == document.getElementsByClassName('inputDate').length-1){
 					data += "{'date': '"+ this.timelineDate[i] +"', 'text': '"+ this.timelineText[i] +"','url': '"+ this.timelineUrl[i] +"'}"
@@ -107,7 +109,7 @@ new Vue({
 					data += "{'date': '"+ this.timelineDate[i] +"', 'text': '"+ this.timelineText[i] +"','url': '"+ this.timelineUrl[i] +"'},"
 				}
 			}
-			var shortcode = "[Timeline name=\""+ idGallery.toLowerCase() +"\" data=\""+ data +"\"/]";
+			var shortcode = "[Timeline name=\""+ idTimeline.toLowerCase() +"\" data=\""+ data +"\" title=\""+ titleTimeline +"\"/]";
 			this.$refs.inputResult.value = shortcode;
 		},
 		createShortCodePannellum(){
