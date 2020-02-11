@@ -73,7 +73,6 @@ class Plugin_Name_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( !is_admin() ) return;
 		if ( $hook === 'toplevel_page_interactive-generator') :
 			wp_enqueue_style( 'tailwind-css', 'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css', [], $this->version );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/interactive-generator.css', [], $this->version, 'all' );
@@ -85,7 +84,7 @@ class Plugin_Name_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts($hook) {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -98,11 +97,11 @@ class Plugin_Name_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( !is_admin() ) return;
-		wp_enqueue_script('hgcharts', 'https://code.highcharts.com/highcharts.js', [], '2.6.10', true );
-		wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
-
+		if ( $hook === 'toplevel_page_interactive-generator') :
+			wp_enqueue_script('hgcharts', 'https://code.highcharts.com/highcharts.js', [], '2.6.10', true );
+			wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
+		endif;
 	}
 	// Tambah menu di sidebar wordpress, jangan lupa regis di __construct
 	public function add_generator_menu() {
