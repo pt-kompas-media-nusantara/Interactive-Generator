@@ -73,7 +73,7 @@ class Plugin_Name_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( $hook === 'toplevel_page_interactive-generator') :
+		if ( $hook === 'toplevel_page_interactive-generator' || strpos($hook, 'shortcode-generator') !== false) :
 			wp_enqueue_style( 'tailwind-css', 'https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css', [], $this->version );
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/interactive-generator.css', [], $this->version, 'all' );
 		endif;
@@ -97,7 +97,7 @@ class Plugin_Name_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		if ( $hook === 'toplevel_page_interactive-generator') :
+		if ( $hook === 'toplevel_page_interactive-generator' || strpos($hook, 'shortcode-generator') !== false) :
 			wp_enqueue_script('hgcharts', 'https://code.highcharts.com/highcharts.js', [], '2.6.10', true );
 			wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
