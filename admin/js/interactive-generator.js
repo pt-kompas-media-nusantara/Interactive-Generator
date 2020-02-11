@@ -115,7 +115,7 @@ new Vue({
 		createShortCodePannellum(){
 			this.showResult = true;
 			var idGallery = this.$refs.inputId.value.split(' ').join('-');
-			var shortcode = "[Pannellum name=\""+ idGallery.toLowerCase() +"\" src=\""+ document.getElementsByClassName('inputUrl')[0].value +"\" credit=\""+ document.getElementsByClassName('inputCredit')[0].value +"\" caption=\""+ document.getElementsByClassName('inputText')[0].value +"\"/]";
+			var shortcode = "[Pannellum name=\""+ idGallery.toLowerCase() +"\" srcfile=\""+ document.getElementsByClassName('inputUrl')[0].value +"\" credit=\""+ document.getElementsByClassName('inputCredit')[0].value +"\" caption=\""+ document.getElementsByClassName('inputText')[0].value +"\"/]";
 			this.$refs.inputResult.value = shortcode;
 		},
 		createShortCodeTwenty(){
