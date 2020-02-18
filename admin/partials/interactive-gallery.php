@@ -21,6 +21,7 @@
       <p class="block text-gray-800">- Setiap input dengan tanda <sup class="text-red-600 font-bold text-sm">*</sup> wajib diisi. Sisanya boleh dikosongkan.</p>
       <p class="block text-gray-800">- Pemberian <b>Judul</b> tidak boleh sama dalam satu konten</p>
       <p class="block text-gray-800">- <b>Jumlah Gambar per Slide</b> untuk menampilakan jumlah foto setiap swipe</p>
+      <p class="block text-gray-800">- Pada setiap input pastikan tidak ada karakter <b>"</b> dan <b>'</b></p>
     </div>
   </div>
   <div class="w-full max-w-3xl">
@@ -33,6 +34,14 @@
         </div>
         <div class="md:w-1/4">
           <input class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="view" required placeholder="Wajib diisi" ref="inputId">
+        </div>
+        <div class="md:w-1/4 ml-4">
+          <label class="w-full text-gray-600">
+            <input class="mr-2 leading-tight" type="checkbox" ref=inputCheckBox>
+            <span class="text-xs">
+              Tampilkan Judul?
+            </span>
+          </label>
         </div>
       </div>
     </div>

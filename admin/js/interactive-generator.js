@@ -71,7 +71,7 @@ new Vue({
 			this.getInput();
 			var data = '',
 					idGallery = this.$refs.inputId.value.split(' ').join('-'),
-					titleGallery = this.$refs.inputId.value;
+					titleGallery = this.$refs.inputCheckBox.checked ? this.$refs.inputId.value : '';
 			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
 				if(i == document.getElementsByClassName('inputUrl').length-1){
 					data += "{'url': '"+ this.valUrl[i] +"', 'title': '"+ this.valTitle[i] +"','credit': '"+ this.valCredit[i] +"','text': '"+ this.valText[i] +"'}"

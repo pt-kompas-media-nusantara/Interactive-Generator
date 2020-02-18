@@ -21,6 +21,7 @@
       <p class="block text-gray-800">- Setiap input dengan tanda <sup class="text-red-600 font-bold text-sm">*</sup> wajib diisi. Sisanya boleh dikosongkan.</p>
       <p class="block text-gray-800">- Pemberian <b>Judul</b> tidak boleh sama dalam satu konten</p>
       <p class="block text-gray-800">- Foto yang bisa digunakan adalah foto yang ada pada "media" di situs yang sama</p>
+      <p class="block text-gray-800">- Pada setiap input pastikan tidak ada karakter <b>"</b> dan <b>'</b></p>
     </div>
   </div>
   <div class="w-full max-w-3xl">

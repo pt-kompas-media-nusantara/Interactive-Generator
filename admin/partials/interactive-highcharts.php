@@ -22,6 +22,7 @@
       <p class="block text-gray-800">- Pemberian <b>Judul</b> tidak boleh sama dalam satu konten</p>
       <p class="block text-gray-800">- Jangan lupa untuk mencentang salah satu jenis highcharts</p>
       <p class="block text-gray-800">- Dalam mode live build, setiap melakukan input, hasil highcharts bisa langsung dilihat pada bagian kanan.</p>
+      <p class="block text-gray-800">- Pada setiap input pastikan tidak ada karakter <b>"</b> dan <b>'</b></p>
     </div>
   </div>
   <div class="min-height-100">
