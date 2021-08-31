@@ -12,10 +12,10 @@ Cukup membuat sebuah folder dengan nama "interactive-generator" di root wp-conte
 Kemudian buka localhost/wp-admin/ anda dan aktifkan secara manual di menu Plugins
 
 == Upgrade Notice ==
-= 0.0 =
+= 1.0.0 =
 Masih menggunakan jQuery karena author saat itu masih malas dan dikejar deadline, bahkan penamaan folder masih default plugin-name
 
-= 0.1 =
+= 1.0.1 =
 Mulai mengubah nama pemfolderan dan class dari plugin-name ke interactive-generator
 Menambahkan fitur Upload Gambar dari yang sebelumnya editor harus paste link gambar secara manual
 
