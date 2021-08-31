@@ -9,15 +9,15 @@
  * that starts the plugin.
  *
  * @link              http://kompas.id
- * @since             1.0.0
+ * @since             1.0.1
  * @package           interactive-generator
  *
  * @wordpress-plugin
  * Plugin Name:       Interactive Generator
  * Plugin URI:        http://kompas.id
- * Description:       Plugin for Interactive Generator (Highcharts, Gallery,)
- * Version:           1.0.0
- * Author:            Deny Ramadna <deny@kompas.com>
+ * Description:       Plugin for Interactive Generator (Highcharts, Gallery, Timeline, etc)
+ * Version:           1.0.1
+ * Author:            Deny Ramadna <denyramanda07@gmail.com>
  * Author URI:        http://kompas.id
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
