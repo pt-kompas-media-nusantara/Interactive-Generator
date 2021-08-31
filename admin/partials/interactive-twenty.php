@@ -9,7 +9,7 @@
  * @since      1.0.0
  *
  * @package    Interactive Generator
- * @subpackage Plugin_Name/admin/partials
+ * @subpackage Interactive_Generator/admin/partials
  */
 ?>
 

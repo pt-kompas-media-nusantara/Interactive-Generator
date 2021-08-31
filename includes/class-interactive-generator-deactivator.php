@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Interactive_Generator
+ * @subpackage Interactive_Generator/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Interactive_Generator
+ * @subpackage Interactive_Generator/includes
+ * @author     Deny Ramanda <denyramanda07@gmail.com>
  */
-class Plugin_Name_Deactivator {
+class Interactive_Generator_Deactivator {
 
 	/**
 	 * Short Description. (use period)
