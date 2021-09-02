@@ -100,6 +100,9 @@ class Interactive_Generator_Admin {
 		if ( $hook === 'toplevel_page_interactive-generator' || strpos($hook, 'shortcode-generator') !== false) :
 			wp_enqueue_script('hgcharts', 'https://code.highcharts.com/highcharts.js', [], '2.6.10', true );
 			wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
+			
+			wp_enqueue_script( 'interactive_subtitle', plugin_dir_url( __FILE__ ) . 'js/interactive-subtitle.js', ['vue'], $this->version, true );
+			
 			wp_enqueue_script( $this->interactive_generator, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
 		endif;
 	}
@@ -113,6 +116,7 @@ class Interactive_Generator_Admin {
 			add_submenu_page( 'interactive-generator', 'Compare Photos', 'Compare Photos', 'edit_posts', 'compare-generator', [$this, 'compare_generator']);
   		add_submenu_page( 'interactive-generator', 'Highcharts', 'Highcharts', 'edit_posts', 'highcharts-generator', [$this, 'highcharts_generator']);
   		add_submenu_page( 'interactive-generator', 'Highcharts - Pie', 'Highcharts - Pie', 'edit_posts', 'highcharts-pie-generator', [$this, 'highcharts_pie_generator']);
+		add_submenu_page( 'interactive-generator', 'Subtitle', 'Subtitle', 'edit_posts', 'subtitle-generator', [$this, 'subtitle_generator']);
 	}
 	public function interactive_generator(){
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-index.php';
@@ -134,5 +138,8 @@ class Interactive_Generator_Admin {
 	}
 	public function highcharts_pie_generator(){
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-highcharts-pie.php';
+	}
+	public function subtitle_generator() {
+		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-subtitle.php';
 	}
 }
