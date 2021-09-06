@@ -14,6 +14,7 @@
 wp_enqueue_media();
 ?>
 
+
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <section class="galleryGenerator" id="app">
   <div class="w-full max-w-3xl">

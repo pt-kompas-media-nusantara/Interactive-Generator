@@ -1,15 +1,12 @@
 Vue.config.devtools = true
 'use strict';
+
 new Vue({
-    el: '#subtitle',
+    el: "#jumbotron",
     data() {
         return {
             showResult: false,
-            backgroundResult: '',
-            fontsizeResult: '',
-            subtitleResult: '',
-            previewResult: [],
-            selectedFontSize: '32',
+            backgroundResult: ''
         }
     },
     computed: {
@@ -19,6 +16,7 @@ new Vue({
     }, 
     methods: {
         galleryOpenMedia(idx) {
+            console.log('clicked')
             const self = this;
 			var file_frame;
 			file_frame = wp.media.frames.file_frame = wp.media({
@@ -35,45 +33,25 @@ new Vue({
 				document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url
 				document.getElementsByClassName('inputUrl')[0].value = attachment.url
                 self.backgroundResult = attachment.url;
-
-                document.getElementsByClassName('close_media')[0].style.display = 'block'
-                document.getElementsByClassName('upload_image_button')[0].style.display = 'none'
 			});
             
 			file_frame.open();
-		},
-        removeMedia() {
-            const self = this;
-            self.backgroundResult = '';
-            document.getElementsByClassName('inputUrl')[0].value = '';
-            document.getElementsByClassName('gallery-img-picked')[0].src = '';
-            document.getElementsByClassName('gallery-img-picked')[0].style.display = 'none'
-
-            document.getElementsByClassName('close_media')[0].style.display = 'none'
-            document.getElementsByClassName('upload_image_button')[0].style.display = 'block'
-        },
+		}, 
         generateShortcode() {
             const self = this;
-            
-            const title = document.getElementsByClassName('inputId')[0].value,
-                fontsize = document.getElementById('fontsize').value;
 
-                self.subtitleResult = title;
-                self.fontsizeResult = fontsize;
-
-            if (title === '') {
+            if (self.backgroundResult === '') {
                 alert('Silahkan isi kolom kosong')
                 return;
             } else {
                 self.showResult = true;
-                const shortcode = `[SubTitle title="${self.subtitleResult}" background="${self.backgroundResult}" fontsize="${self.fontsizeResult}" /]`;
+                const shortcode = `[Jumbotron  background="${self.backgroundResult}" /]`;
 
 			    self.$refs.inputResult.value = shortcode;
-                self.previewResult = ``
+                // self.previewResult = ``
                 // return `[Subtitle title="${self.subtitleResult}" background="${self.backgroundResult}" fontsize="${self.fontsizeResult}" /]`
             }
 
         }
     }
 })
-

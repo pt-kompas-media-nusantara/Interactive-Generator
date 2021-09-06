@@ -102,13 +102,14 @@ class Interactive_Generator_Admin {
 			wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
 			
 			wp_enqueue_script( 'interactive_subtitle', plugin_dir_url( __FILE__ ) . 'js/interactive-subtitle.js', ['vue'], $this->version, true );
+			wp_enqueue_script( 'interactive_jumbotron', plugin_dir_url( __FILE__ ) . 'js/interactive-jumbotron.js', ['vue'], $this->version, true );
 			
 			wp_enqueue_script( $this->interactive_generator, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
 		endif;
 	}
 	// Tambah menu di sidebar wordpress, jangan lupa regis di __construct
 	public function add_generator_menu() {
-			if ( !is_admin() ) return;
+		if ( !is_admin() ) return;
 			add_menu_page( 'Shortcode Generator', 'Shortcode Generator', 'edit_posts', 'interactive-generator', [$this, 'interactive_generator'], 'dashicons-star-empty' );
 			add_submenu_page( 'interactive-generator', 'Gallery', 'Gallery', 'edit_posts', 'gallery-generator', [$this, 'gallery_generator']);
 			add_submenu_page( 'interactive-generator', 'Timeline', 'Timeline', 'edit_posts', 'timeline-generator', [$this, 'timeline_generator']);
@@ -117,6 +118,7 @@ class Interactive_Generator_Admin {
   		add_submenu_page( 'interactive-generator', 'Highcharts', 'Highcharts', 'edit_posts', 'highcharts-generator', [$this, 'highcharts_generator']);
   		add_submenu_page( 'interactive-generator', 'Highcharts - Pie', 'Highcharts - Pie', 'edit_posts', 'highcharts-pie-generator', [$this, 'highcharts_pie_generator']);
 		add_submenu_page( 'interactive-generator', 'Subtitle', 'Subtitle', 'edit_posts', 'subtitle-generator', [$this, 'subtitle_generator']);
+		add_submenu_page( 'interactive-generator', 'Jumbotron', 'Jumbotron', 'edit_posts', 'jumbotron-generator', [$this, 'jumbotron_generator']);
 	}
 	public function interactive_generator(){
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-index.php';
@@ -141,5 +143,8 @@ class Interactive_Generator_Admin {
 	}
 	public function subtitle_generator() {
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-subtitle.php';
+	}
+	public function jumbotron_generator() {
+		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-jumbotron.php';
 	}
 }

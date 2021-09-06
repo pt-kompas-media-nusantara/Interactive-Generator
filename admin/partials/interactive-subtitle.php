@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<!-- Subjudul --> 
-		<div class="w-full max-w-3xl">
+		<div class="w-full max-w-3xl mb-4">
 			<div class="mt-4">
 				<div class="md:flex md:items-center mb-2">
 					<div class="md:w-1/4">
@@ -45,7 +45,7 @@
 		</div>
 
 		<!-- fontSize Text --> 
-		<div class="md:flex md:items-center mb-2">
+		<div class="md:flex md:items-center mb-4">
 			<div class="md:w-1/4">
 				<label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
 					Ukuran Subjudul
@@ -53,16 +53,15 @@
 			</div>
 			<div class="md:w-3/4">
 				<select id="fontsize" name="fontsize" v-model="selectedFontSize">
-					<option value="14">14</option>
-					<option value="18">18</option>
-					<option value="22">22</option>
-					<option value="24">24</option>
+					<option value="32">Small</option>
+					<option value="36">Medium</option>
+					<option value="40">Large</option>
 				</select>
 			</div>
 		</div>
 
 		<!-- Subjudul Background --> 
-		<div class="md:flex md:items-center mb-2">
+		<div class="md:flex md:items-center mb-4">
 			<div class="md:w-1/4">
 				<label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
 					Link Gambar
@@ -70,16 +69,18 @@
 			</div>
 			<div class="md:w-4/6">
 				<input class="inputUrl bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="url" required placeholder="Wajib diisi" readonly hidden>
-				<img class="gallery-img-picked mb-2" 
+				
+				<img class="gallery-img-picked mb-2 relative" 
 					src="" v-model="selectedBackground"
 					alt="picked-img" 
 					style="width:auto; height:100px; display:none;">
 				<input type="button" class="button upload_image_button" value="<?php _e( 'Upload gambar' ); ?>" @click="galleryOpenMedia()" />
+				<div @click="removeMedia()" class="close_media md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
 			</div>
 		</div>
 
 		<!-- Generate Shortcode --> 
-		<div class="md:flex md:items-center mb-8">
+		<div class="md:flex md:items-center mb-8 mt-8">
 			<div class="md:w-1/4"></div>
 			<div class="md:w-3/4">
 				<div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center" @click="generateShortcode()">
@@ -101,11 +102,11 @@
 	
 	<!-- Preview Section -->
 	<section class="preview_block w-full flex-1">
-		<div class=" h-full flex justify-center items-center"
-			v-bind:style="'background: url(' + selectedBackground + ') no-repeat center center / cover'">
-			<div class="preview-text bg-cover flex justify-center max-w-2xl md:w-full" 
-				v-bind:class="{ show: showResult }">
-				<p class="text-left" v-bind:style="'font-size: ' + selectedFontSize + 'px'">{{ subtitleResult }}</p>
+		<div class=" h-full flex justify-center items-center">
+			<div class="preview-text flex justify-center max-w-2xl md:w-full py-16 bg-black bg-cover bg-center"
+				:class="{ show: showResult }"
+				:style="'background-image: url(' + selectedBackground + ')'">
+				<p class="text-left text-white" v-bind:style="'font-size: ' + selectedFontSize + 'px'">{{ subtitleResult }}</p>
 			</div>
 		</div>
 	</section>
