@@ -9,7 +9,7 @@ new Vue({
             fontsizeResult: '',
             subtitleResult: '',
             previewResult: [],
-            selectedFontSize: '14',
+            selectedFontSize: '32',
         }
     },
     computed: {
@@ -19,7 +19,6 @@ new Vue({
     }, 
     methods: {
         galleryOpenMedia(idx) {
-            console.log('clicked')
             const self = this;
 			var file_frame;
 			file_frame = wp.media.frames.file_frame = wp.media({
@@ -36,10 +35,23 @@ new Vue({
 				document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url
 				document.getElementsByClassName('inputUrl')[0].value = attachment.url
                 self.backgroundResult = attachment.url;
+
+                document.getElementsByClassName('close_media')[0].style.display = 'block'
+                document.getElementsByClassName('upload_image_button')[0].style.display = 'none'
 			});
             
 			file_frame.open();
 		},
+        removeMedia() {
+            const self = this;
+            self.backgroundResult = '';
+            document.getElementsByClassName('inputUrl')[0].value = '';
+            document.getElementsByClassName('gallery-img-picked')[0].src = '';
+            document.getElementsByClassName('gallery-img-picked')[0].style.display = 'none'
+
+            document.getElementsByClassName('close_media')[0].style.display = 'none'
+            document.getElementsByClassName('upload_image_button')[0].style.display = 'block'
+        },
         generateShortcode() {
             const self = this;
             
