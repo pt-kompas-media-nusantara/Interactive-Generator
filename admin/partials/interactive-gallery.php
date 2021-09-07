@@ -16,7 +16,7 @@ wp_enqueue_media();
 
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<section class="galleryGenerator" id="app">
+<section class="galleryGenerator" id="gallery">
   <div class="w-full max-w-3xl">
     <div class="mb-8">
       <p class="block text-gray-800 mb-1 font-bold">Catatan:</p>
@@ -39,7 +39,7 @@ wp_enqueue_media();
         </div>
         <div class="md:w-1/4 ml-4">
           <label class="w-full text-gray-600">
-            <input class="mr-2 leading-tight" type="checkbox" ref=inputCheckBox>
+            <input class="mr-2 leading-tight" type="checkbox" ref="inputCheckBox">
             <span class="text-xs">
               Tampilkan Judul?
             </span>
@@ -47,7 +47,47 @@ wp_enqueue_media();
         </div>
       </div>
     </div>
-    <div class="mb-8">
+    <div class="mb-2">
+      <div class="md:flex md:items-center mb-2">
+        <div class="md:w-1/4">
+          <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+            Format Layout
+          </label>
+        </div>
+        <div class="md:w-3/4 flex">
+            <div class="pr-6">
+                <label class="radio-inline">
+                    <input type="radio" name="layout" value="top-to-bottom" v-model="layoutFormat" class="form-check-input" checked>Atas Bawah (Vertical)
+                </label>
+            </div>
+            <div class="pr-2">
+                <label class="radio-inline">
+                    <input type="radio" name="layout" value="left-to-right" v-model="layoutFormat" class="form-check-input">Kiri Kanan (Horizontal)
+                </label>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-2">
+      <div class="md:flex md:items-center mb-2">
+        <div class="md:w-1/4">
+          <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+            Tambahkan background pada text
+          </label>
+        </div>
+        <div class="md:w-3/4 flex">
+          <div class="w-full">
+            <label class="w-full text-gray-600">
+              <input class="mr-2 leading-tight" type="checkbox" ref="checkBoxBackground">
+              <span class="text-xs">
+                *caption akan memiliki warna background
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-8" v-if="layoutFormat !== 'left-to-right'">
       <div class="md:flex md:items-center mb-2">
         <div class="md:w-1/4">
           <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
@@ -104,11 +144,22 @@ wp_enqueue_media();
           <textarea class="inputText form-textarea appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" rows="8" name="text"></textarea>
         </div>
       </div>
+      <div class="md:flex md:items-center mb-2">
+        <div class="md:w-1/4">
+          <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+            Action Button
+          </label>
+        </div>
+        <div class="md:w-3/4 flex">
+          <input class="w-1/4 mr-2 inputButtonLabel bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="action-button" placeholder="Label">
+          <input class="w-3/4 inputButton bg-gray-200 appearance-none border-2 border-gray-200 rounded py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="action-button" placeholder="Link">
+        </div>
+      </div>
     </div>
     <div class="md:flex md:items-center mb-8">
       <div class="md:w-1/4"></div>
       <div class="md:w-3/4">
-        <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center" @click="createShortCode()">
+        <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="createShortCode()">
           <span>Generate Shortcode</span>
         </div>
         <div class="inline-flex float-right">
