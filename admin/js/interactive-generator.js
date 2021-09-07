@@ -15,10 +15,6 @@ new Vue({
     return {
 			formCount: 1,
 			showResult: false,
-			valUrl: [],
-			valCredit: [],
-			valTitle: [],
-			valText: [],
 			timelineDate: [],
 			timelineText: [],
 			timelineUrl: [],
@@ -48,40 +44,6 @@ new Vue({
 		}
 	},
 	methods: {
-		getInput(){
-			this.valUrl = [];
-			this.valCredit = [];
-			this.valTitle = [];
-			this.valText = [];
-			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
-				this.valUrl.push(document.getElementsByClassName('inputUrl')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputCredit').length;i++){
-				this.valCredit.push(document.getElementsByClassName('inputCredit')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputTitle').length;i++){
-				this.valTitle.push(document.getElementsByClassName('inputTitle')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputText').length;i++){
-				this.valText.push(document.getElementsByClassName('inputText')[i].value);
-			}
-		},
-		createShortCode(){
-			this.showResult = true;
-			this.getInput();
-			var data = '',
-					idGallery = this.$refs.inputId.value.split(' ').join('-'),
-					titleGallery = this.$refs.inputCheckBox.checked ? this.$refs.inputId.value : '';
-			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
-				if(i == document.getElementsByClassName('inputUrl').length-1){
-					data += "{'url': '"+ this.valUrl[i] +"', 'title': '"+ this.valTitle[i] +"','credit': '"+ this.valCredit[i] +"','text': '"+ this.valText[i] +"'}"
-				}else{
-					data += "{'url': '"+ this.valUrl[i] +"', 'title': '"+ this.valTitle[i] +"','credit': '"+ this.valCredit[i] +"','text': '"+ this.valText[i] +"'},"
-				}
-			}
-			var shortcode = "[GallerySlide name=\""+ idGallery.toLowerCase() +"\" inview=\""+ this.$refs.inputView.value +"\" data=\""+ data +"\" title=\""+ titleGallery +"\"/]";
-			this.$refs.inputResult.value = shortcode;
-		},
 		getInputTimeline(){
 			this.timelineDate = [];
 			this.timelineText = [];
