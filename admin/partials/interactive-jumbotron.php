@@ -173,34 +173,27 @@
         </div>
     </section>
     <section class="preview_block w-full flex-1">
-        <div class="w-full bg-gray-500 h-full relative">
-            <div class="w-full h-full flex"
-                v-if="jumbotronType == 'Image'"
-                :class="titlePosResult"
-                :style="'background: url(' + selectedBackground + ') no-repeat center center / cover'"
-                >
-                <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl"
-                    :class="alignTextResult"
-                    :style="'color:' + titleColor"
+        <div class="flex relative w-full h-full" :class="titlePosResult">
+            <div class="w-full bg-gray-500 h-full absolute top-0 left-0">
+                <div class="w-full h-full flex bg-cover bg-center"
+                    v-if="jumbotronType == 'Image'"
+                    :style="'background-image: url(' + selectedBackground + ')'"
                     >
-                    {{ subtitleResult }}
-                </p>
+                </div>
+                <video v-if="jumbotronType == 'Video'" 
+                    class="w-full h-full flex absolute top-0 left-0 object-cover object-center" id="jumbotronVideo" autoplay loop 
+                    poster="https://interaktif.kompas.id/wp-content/uploads/sites/316/2021/06/panji_koming_vid_poster.jpg"
+                    :src="selectedVideo"
+                    >
+                </video>
             </div>
-            <video v-if="jumbotronType == 'Video'" 
-                class="w-full h-full flex" id="jumbotronVideo" autoplay loop 
-                poster="https://interaktif.kompas.id/wp-content/uploads/sites/316/2021/06/panji_koming_vid_poster.jpg"
-                :src="selectedVideo"
+            <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl z-10"
+                :class="alignTextResult"
+                :style="'color:' + titleColor"
+                style="text-shadow: 3px 2px 12px rgb(0 0 0 / 92%);"
                 >
-            </video>
-            <div v-if="jumbotronType == 'Video'"
-                class="w-full h-full flex absolute top-0 left-0" 
-                :class="titlePosResult" >
-                <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl"
-                    :class="alignTextResult"
-                    :style="'color:' + titleColor">
-                    {{ subtitleResult }}
-                </p>
-            </div>
+                {{ subtitleResult }}
+            </p>
         </div>
     </section>
 </section>
