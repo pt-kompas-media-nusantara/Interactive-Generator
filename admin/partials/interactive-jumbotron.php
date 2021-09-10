@@ -18,29 +18,123 @@
     <section class="input_block w-full flex-1 mr-2">
         <div class="w-full">
             <div class="mt-8">
-				<p class="block text-gray-800 mb-1 font-bold">Catatan:</p>
-				<p class="block text-gray-800">- Setiap input dengan tanda <sup class="text-red-600 font-bold text-sm">*</sup> wajib diisi. Sisanya boleh dikosongkan.</p>
-				<p class="block text-gray-800">- Pemberian <b>Sub Judul</b> tidak boleh sama dalam satu konten</p>
+				<p class="block text-gray-800 mb-4 font-bold">Catatan:</p>
+				<p class="block text-gray-800 mb-4">- Setiap input dengan tanda <sup class="text-red-600 font-bold text-sm">*</sup> wajib diisi. Sisanya boleh dikosongkan.</p>
 			</div>
 
-            <!-- Jumbotron --> 
+            <!-- Jumbotron Type --> 
             <div class="md:flex md:items-center mb-2">
                 <div class="md:w-1/4">
                     <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                        Pilih gambar
+                        Tipe Jumbotron
                     </label>
                 </div>
                 <div class="md:w-4/6">
+                    <select id="jumbotronType" name="jumbotronType" v-model="jumbotronType">
+                        <option value="Image">Image</option>
+                        <option value="Video">Video</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Input Url -->
+            <div class="md:flex md:items-center mb-2">
+                <div class="md:w-1/4">
+                    <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                        Input<sup class="text-red-600 font-bold text-sm">*</sup>
+                    </label>
+                </div>
+                <div class="md:w-3/4">
                     <input class="inputUrl bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="url" required placeholder="Wajib diisi" readonly hidden>
-                    <img class="gallery-img-picked mb-2"
+
+                    <img class="gallery-img-picked mb-2 relative" 
+                        v-if="jumbotronType === 'Image'"
                         src="" v-model="selectedBackground"
                         alt="picked-img"
                         style="width:auto; height:100px; display:none;">
-                    <input type="button" class="button upload_image_button" 
+
+                    <div @click="removeMedia()" v-if="jumbotronType === 'Image'"
+                    class="close_media md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
+
+                    <input type="button" 
+                        v-if="jumbotronType === 'Image'"
+                        class="button upload_image_button"
                         value="<?php _e( 'Upload gambar' ); ?>" @click="galleryOpenMedia()"
+                    />
+
+                    <input v-else v-model="videoSource"
+                        class="inputId gallery-vid-picked bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                        type="text" maxlength="120"
+                        name="view" required 
+                        placeholder="Paste url video disini" ref="inputId"
                     />
                 </div>
             </div>
+
+            <!-- Title Input --> 
+            <div class="w-full max-w-3xl mb-4">
+                <div class="mt-4">
+                    <div class="md:flex md:items-center mb-2">
+                        <div class="md:w-1/4">
+                            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                Judul
+                            </label>
+                        </div>
+                        <div class="md:w-3/4">
+                            <input 
+                                v-model="subtitleResult"
+                                class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                                type="text" maxlength="120"
+                                name="view" required 
+                                placeholder="Wajib diisi" ref="inputId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Title Position && Color-->
+            <div class="md:flex md:items-center mb-2">
+                <div class="md:w-1/4">
+                    <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                        Letak Judul
+                    </label>
+                </div>
+                <div class="md:w-3/4 md:flex">
+                    <div class="md:w-1/3">
+                        <select id="titlePosition" name="titlePosition" v-model="titlePos">
+                            <option value="center">Center</option>
+                            <option value="center-top">Center Top</option>
+                            <option value="center-bottom">Center Bottom</option>
+                            <option value="left">Left Center</option>
+                            <option value="left-top">Left Top</option>
+                            <option value="left-bottom">Left Bottom</option>
+                            <option value="right">Right Center</option>
+                            <option value="right-top">Right Top</option>
+                            <option value="right-bottom">Right Bottom</option>
+                        </select>
+                    </div>
+
+                    <!-- Title Color -->
+                    <div class="md:w-1/3">
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4 mr-2">
+                                <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                    Warna
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <select id="titlePosition" name="titlePosition" v-model="titleColor">
+                                    <option value="black">Black</option>
+                                    <option value="white">White</option>
+                                    <option value="theme">Tema</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
             <!-- shortcode -->
             <div class="md:flex md:items-center mb-8">
@@ -51,7 +145,7 @@
                     </div>
                 </div>
             </div>
-            <div class="md:flex md:items-center mb-2 opacity-0" v-bind:class="{ show : showResult }">
+            <div class="md:flex md:items-center mb-2 opacity-0" :class="{ show : showResult }">
                 <div class="md:w-1/4">
                     <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
                     Salin Shortcode ini
@@ -61,11 +155,35 @@
                     <textarea class="inputResult form-textarea appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 text-base" rows="5" name="text" ref="inputResult"></textarea>
                 </div>
             </div>
+            
         </div>
     </section>
-    <section class="preview_block w-full flex-1 mr-2">
-        <div class="w-full bg-gray-500 h-full">
-            <div v-bind:style="'background: url(' + selectedBackground + ') no-repeat center center / cover'" class="w-full h-full" >
+    <section class="preview_block w-full flex-1">
+        <div class="w-full bg-gray-500 h-full relative">
+            <div class="w-full h-full flex"
+                v-if="jumbotronType == 'Image'"
+                :class="titlePosResult"
+                :style="'background: url(' + selectedBackground + ') no-repeat center center / cover'"
+                >
+                <p class="text-left text-3xl"
+                    :style="'color:' + titleColor"
+                    >
+                    {{ subtitleResult }}
+                </p>
+            </div>
+            <video v-if="jumbotronType == 'Video'" 
+                class="w-full h-full flex" id="jumbotronVideo" autoplay loop 
+                poster="https://interaktif.kompas.id/wp-content/uploads/sites/316/2021/06/panji_koming_vid_poster.jpg"
+                :src="selectedVideo"
+                >
+            </video>
+            <div v-if="jumbotronType == 'Video'"
+                class="w-full h-full flex absolute top-0 left-0" 
+                :class="titlePosResult" >
+                <p class="max-w-lg text-3xl bg-gray-100 p-1 rounded max-w-screen-sm"
+                    :style="'color:' + titleColor">
+                    {{ subtitleResult }}
+                </p>
             </div>
         </div>
     </section>
