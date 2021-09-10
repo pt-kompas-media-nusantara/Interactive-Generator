@@ -103,6 +103,7 @@ class Interactive_Generator_Admin {
 			
 			wp_enqueue_script( 'interactive_subtitle', plugin_dir_url( __FILE__ ) . 'js/interactive-subtitle.js', ['vue'], $this->version, true );
 			wp_enqueue_script( 'interactive_jumbotron', plugin_dir_url( __FILE__ ) . 'js/interactive-jumbotron.js', ['vue'], $this->version, true );
+			wp_enqueue_script( 'interactive_gallery', plugin_dir_url( __FILE__ ) . 'js/interactive-gallery.js', ['vue'], $this->version, true );
 			
 			wp_enqueue_script( $this->interactive_generator, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
 		endif;
