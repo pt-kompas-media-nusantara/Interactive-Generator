@@ -72,27 +72,25 @@
             </div>
 
             <!-- Title Input --> 
-            <div class="w-full max-w-3xl mb-4">
-                <div class="mt-4">
-                    <div class="md:flex md:items-center mb-2">
-                        <div class="md:w-1/4">
-                            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                                Judul
-                            </label>
-                        </div>
-                        <div class="md:w-3/4">
-                            <input 
-                                v-model="subtitleResult"
-                                class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
-                                type="text" maxlength="120"
-                                name="view" required 
-                                placeholder="Wajib diisi" ref="inputId">
-                        </div>
+            <div class="md:flex md:items-center mb-2">
+                <div class="md:w-1/4">
+                    <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                        Judul
+                    </label>
+                </div>
+                <div class="md:w-3/4">
+                    <div class="md:w-3/4">
+                        <input 
+                            v-model="subtitleResult"
+                            class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                            type="text" maxlength="120"
+                            name="view" required 
+                            placeholder="Wajib diisi" ref="inputId">
                     </div>
                 </div>
             </div>
 
-            <!-- Title Position && Color-->
+            <!-- Title Position, Color, Align -->
             <div class="md:flex md:items-center mb-2">
                 <div class="md:w-1/4">
                     <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
@@ -131,6 +129,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="md:w-1/3">
+                        <div class="md:flex md:items-center mb-2">
+                            <div class="md:w-1/4 mr-2">
+                                <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                                    Align
+                                </label>
+                            </div>
+                            <div class="md:w-3/4">
+                                <select id="titlePosition" name="titlePosition" v-model="alignText">
+                                    <option value="center">Center</option>
+                                    <option value="left">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -165,7 +179,8 @@
                 :class="titlePosResult"
                 :style="'background: url(' + selectedBackground + ') no-repeat center center / cover'"
                 >
-                <p class="text-left text-3xl"
+                <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl"
+                    :class="alignTextResult"
                     :style="'color:' + titleColor"
                     >
                     {{ subtitleResult }}
@@ -180,7 +195,8 @@
             <div v-if="jumbotronType == 'Video'"
                 class="w-full h-full flex absolute top-0 left-0" 
                 :class="titlePosResult" >
-                <p class="max-w-lg text-3xl bg-gray-100 p-1 rounded max-w-screen-sm"
+                <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl"
+                    :class="alignTextResult"
                     :style="'color:' + titleColor">
                     {{ subtitleResult }}
                 </p>
