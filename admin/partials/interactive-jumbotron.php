@@ -181,13 +181,13 @@
                     >
                 </div>
                 <video v-if="jumbotronType == 'Video'" 
-                    class="w-full h-full flex absolute top-0 left-0 object-cover object-center" id="jumbotronVideo" autoplay loop 
+                    class="w-full h-full flex absolute top-0 left-0 object-cover object-center" id="jumbotronVideo" autoplay loop muted
                     poster="https://interaktif.kompas.id/wp-content/uploads/sites/316/2021/06/panji_koming_vid_poster.jpg"
                     :src="selectedVideo"
                     >
                 </video>
             </div>
-            <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-16 max-w-2xl z-10"
+            <p class="text-3xl rounded max-w-screen-sm p-4 lg:p-12 max-w-2xl z-10 break-words"
                 :class="alignTextResult"
                 :style="'color:' + titleColor"
                 style="text-shadow: 3px 2px 12px rgb(0 0 0 / 92%);"
