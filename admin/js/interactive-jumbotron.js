@@ -13,7 +13,8 @@ new Vue({
             titlePos: 'center',
             titleColor: 'black',
             videoSource: '',
-            alignText: 'center'
+            alignText: 'center',
+            useExcerpt: false
         }
     },
     computed: {
@@ -119,12 +120,12 @@ new Vue({
             if (img == undefined || null) {
                 this.backgroundResult = ''
                 this.videoResult = document.getElementsByClassName('gallery-vid-picked')[0].value;
-                shortcode = `{ 'type': '${this.jumbotronType}', 'url': '${this.videoResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
+                shortcode = `{ 'type': '${this.jumbotronType}', 'excerpt': '${this.useExcerpt}', 'url': '${this.videoResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
             }
             // type image
             else if(vid == undefined || null) {
                 this.videoResult = ''
-                shortcode = `{ 'type': '${this.jumbotronType}', 'url': '${this.backgroundResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
+                shortcode = `{ 'type': '${this.jumbotronType}', 'excerpt': '${this.useExcerpt}', 'url': '${this.backgroundResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
             } else {
                 shortcode = `{}`
             }

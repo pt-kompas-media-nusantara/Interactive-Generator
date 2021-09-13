@@ -37,6 +37,21 @@
                 </div>
             </div>
 
+            <!-- Include Excerpt on Jumbotron Checkbox --> 
+            <div class="md:flex md:items-center mb-2">
+                <div class="md:w-1/4">
+                    <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                        Sertakan excerpt?<sup class="text-red-600 font-bold text-sm">*</sup>
+                    </label>
+                </div>
+                <div class="md:w-4/6">
+                    <select v-model="useExcerpt">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Input Url -->
             <div class="md:flex md:items-center mb-2">
                 <div class="md:w-1/4">
