@@ -124,7 +124,7 @@ new Vue({
             // type image
             else if(vid == undefined || null) {
                 this.videoResult = ''
-                shortcode = `{ type: '${this.jumbotronType}', url: '${this.backgroundResult}', 'title-position' : '${this.titlePos}', 'title-align': '${this.alignText}' }`;
+                shortcode = `{ type: '${this.jumbotronType}', url: '${this.backgroundResult}', 'title-position' : '${this.titlePos}', color: '${this.titleColor}', 'title-align': '${this.alignText}' }`;
             } else {
                 shortcode = `{}`
             }
