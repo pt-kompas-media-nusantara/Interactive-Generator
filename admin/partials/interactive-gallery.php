@@ -141,7 +141,7 @@ wp_enqueue_media();
           </label>
         </div>
         <div class="md:w-3/4">
-          <textarea class="inputText form-textarea appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" rows="8" name="text"></textarea>
+          <textarea class="inputText form-textarea appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" rows="8" name="text" maxlength="500"></textarea>
         </div>
       </div>
       <div class="md:flex md:items-center mb-2">
