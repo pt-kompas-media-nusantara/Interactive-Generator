@@ -31,9 +31,9 @@ new Vue({
 			});
 			file_frame.on( 'select', function() {
 				var attachment = file_frame.state().get('selection').first().toJSON();
-				document.getElementsByClassName('gallery-img-picked')[idx-1].style.display = 'block'
-				document.getElementsByClassName('gallery-img-picked')[idx-1].src = attachment.url
-				document.getElementsByClassName('inputUrl')[idx-1].value = attachment.url
+				document.getElementsByClassName('gallery-img-picked')[idx].style.display = 'block'
+				document.getElementsByClassName('gallery-img-picked')[idx].src = attachment.url
+				document.getElementsByClassName('inputUrl')[idx].value = attachment.url
 			});
 			file_frame.open();
 		},

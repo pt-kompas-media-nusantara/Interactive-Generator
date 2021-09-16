@@ -111,7 +111,7 @@ wp_enqueue_media();
         <div class="md:w-3/4">
           <input class="inputUrl bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="url" required placeholder="Wajib diisi" readonly hidden>
           <img class="gallery-img-picked" src="" alt="picked-img" style="width:auto; height:100px;display:none;">
-          <input type="button" class="button upload_image_button" value="<?php _e( 'Upload gambar' ); ?>" @click="galleryOpenMedia(item)" />
+          <input type="button" class="button upload_image_button" value="<?php _e( 'Upload gambar' ); ?>" @click="galleryOpenMedia(key)" />
         </div>
       </div>
       <div class="md:flex md:items-center mb-2">
