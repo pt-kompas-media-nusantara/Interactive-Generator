@@ -5,21 +5,21 @@ new Vue({
     el: "#gallery",
     data() {
         return {
-			formCount: 1,
-			showResult: false,
-			valUrl: [],
-			valCredit: [],
-			valTitle: [],
-			valText: [],
-            valInputButton: [],
-            valInputButtonLabel: [],
-            layoutFormat: 'top-to-bottom'
+					forms: [{ value: '' }],
+					showResult: false,
+					valUrl: [],
+					valCredit: [],
+					valTitle: [],
+					valText: [],
+					valInputButton: [],
+					valInputButtonLabel: [],
+					layoutFormat: 'top-to-bottom'
         }
     },
-    computed: {
-
-    }, 
     methods: {
+			addForm() {
+				this.forms.push({ value: '' });
+			},
 		galleryOpenMedia(idx) {
 			var file_frame;
 			file_frame = wp.media.frames.file_frame = wp.media({

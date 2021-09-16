@@ -101,7 +101,7 @@ wp_enqueue_media();
     </div>
   </div>
   <div class="w-full max-w-3xl">
-    <div class="mb-8" v-for="(item, key) in formCount" :key="key">
+    <div class="mb-8" v-for="(item, key) in forms" :key="key">
       <div class="md:flex md:items-center mb-2">
         <div class="md:w-1/4">
           <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
@@ -134,14 +134,15 @@ wp_enqueue_media();
           <input class="inputTitle bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="title">
         </div>
       </div>
-      <div class="md:flex md:items-center mb-2">
+      <div class="md:flex md:items-center mb-4">
         <div class="md:w-1/4">
           <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
             Caption Gambar
           </label>
         </div>
         <div class="md:w-3/4">
-          <textarea class="inputText form-textarea appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" rows="8" name="text" maxlength="500"></textarea>
+          <textarea class="inputText form-textarea appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" rows="8" name="text" maxlength="500" v-model="item.value"></textarea>
+          <p class="text-right" :class="{'text-red-500' : item.value.length > 480}">{{ item.value.length }}/500</p>
         </div>
       </div>
       <div class="md:flex md:items-center mb-2">
@@ -163,10 +164,10 @@ wp_enqueue_media();
           <span>Generate Shortcode</span>
         </div>
         <div class="inline-flex float-right">
-          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="formCount>1" @click="formCount--;showResult = false;">
+          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="forms.length>1" @click="forms.pop();showResult = false;">
             -
           </div>
-          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="formCount++;showResult = false;">
+          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="addForm();showResult = false;">
             +
           </div>
         </div>
