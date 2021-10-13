@@ -5,52 +5,36 @@ new Vue({
     el: "#quiz",
     data() {
         return {
+            id: '',
+            showResult: false,
             cover: {
                 titleResult: '',
                 excerptResult: '',
                 thumbnail: '',
                 buttonText: '',
             },
-            showResult: false
+            kuis: [
+                {
+                    pos: 0,
+                    type: '',
+                    question: '',
+                    choice_1: '',
+                    choice_2: '',
+                    choice_3: '',
+                    choice_4: '',
+                    choice_5: '',
+                    button: ''
+                }
+            ],
+            quiz: [{ value: '' }]
         }
     },
     computed: {
         selectedBackground() {
             return this.backgroundResult;
         },
-        titlePosResult() {
-            switch (this.titlePos) {
-                case "center":
-                    return 'justify-center items-center'
-                    break;
-                case "center-top":
-                    return 'justify-center items-start'
-                    break;
-                case "center-bottom":
-                    return 'justify-center items-end'
-                    break;
-                case "left":
-                    return 'justify-start items-center'
-                    break;
-                case "left-top":
-                    return 'justify-start items-start'
-                    break;
-                case "left-bottom":
-                    return 'justify-start items-end'
-                    break;
-                case "right":
-                    return 'justify-end items-center'
-                    break;
-                case "right-top":
-                    return 'justify-end items-start'
-                    break;
-                case "right-bottom":
-                    return 'justify-end items-end'
-                    break;
-                default:
-                    return 'justify-center items-center'
-                    break;
-            }
+        updateQuizId() {
+            this.id = this.generateId();
         },
         selectedVideo() {
             return this.videoSource;
@@ -70,6 +54,41 @@ new Vue({
         }
     }, 
     methods: {
+        addForm() {
+			this.quiz.push({ value: '' });
+		},
+		getInput(){
+			this.valUrl = []
+			this.valCredit = []
+			this.valTitle = []
+			this.valText = []
+			this.valInputButton = []
+            this.valInputButtonLabel = []
+            for(var i=0;i<document.getElementsByClassName('quizQuestion').length;i++){
+				this.valUrl.push(document.getElementsByClassName('quizQuestion')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
+				this.valUrl.push(document.getElementsByClassName('inputUrl')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputCredit').length;i++){
+				this.valCredit.push(document.getElementsByClassName('inputCredit')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputTitle').length;i++){
+				this.valTitle.push(document.getElementsByClassName('inputTitle')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputText').length;i++){
+				this.valText.push(document.getElementsByClassName('inputText')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputButton').length;i++){
+				this.valInputButton.push(document.getElementsByClassName('inputButton')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputButton').length;i++){
+				this.valInputButton.push(document.getElementsByClassName('inputButton')[i].value);
+			}
+			for(var i=0;i<document.getElementsByClassName('inputButtonLabel').length;i++){
+				this.valInputButtonLabel.push(document.getElementsByClassName('inputButtonLabel')[i].value);
+			}
+		},
         galleryOpenMedia(idx) {
             const self = this;
 			var file_frame;
@@ -129,6 +148,17 @@ new Vue({
 
             self.$refs.inputResult.value = shortcode;
 
+        },
+        generateId() {
+            let date = new Date();
+            let d = date.getDate();
+            let m = (date.getMonth() + 1); //Month from 0 to 11
+            let y = date.getFullYear();
+            // remove special character and spacing on title
+            let title = this.cover.titleResult ? (this.cover.titleResult).replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,' ').replace(/\s+/g, '-').toLowerCase() : '';
+            return title + '-' + (d <= 9 ? '0' + d : d) +  (m<=9 ? '0' + m : m) +  y;
         }
+    },
+    mounted() {
     }
 })
