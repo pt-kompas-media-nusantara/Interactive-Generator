@@ -145,27 +145,52 @@ wp_enqueue_media();
     <section class="input_block w-full flex-1 mr-2">
       <div class="w-full relative flex flex-col" style="background: #acf">
         <!-- Type -->
-        <div class="w-full relative flex">
+        <div class="w-full relative flex mt-2">
           <div class="md:w-1/4 flex justify-end">
-            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-2">
               Tipe Pertanyaan <sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
-          <div class="md:w-3/4 flex relative items-center">
-            <div class="mr-3">
-              <input class="typeDefaultQuiz" id="typeDefaultQuiz" type="radio" name="quizType" value="default">
-              <label class="mr-4" for="typeDefaultQuiz">default</label>
-            </div>
-            <div class="mr-3">
-              <input class="typeImageQuiz" id="typeImageQuiz" type="radio" name="quizType" value="image">
-              <label class="mr-4" for="typeImageQuiz">image</label>
-            </div>
-            <div class="mr-3">
-              <input class="typeAudioQuiz" id="typeAudioQuiz" type="radio" name="quizType" value="audio">
-              <label for="typeAudioQuiz">audio</label>
+          <select @change="updateType(key)"
+            class="inputQuizType md:w-1/6 flex relative items-center" name="inputQuizType">
+            <option value="default" selected="selected">default</option>
+            <option value="image">image</option>
+            <option value="audio">audio</option>
+          </select>
+        </div>
+        <!-- Media Input (Image) -->
+        <div v-if="valTypeQuiz[key] == 'image'" class="w-full relative flex mt-2">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              Thumbnail
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <div class="md:w-5/6">
+              <input class="inputMediaImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
+              <input type="button" 
+                class="button upload_image_quiz_btn"
+                value="<?php _e( 'Upload gambar' ); ?>" @click="quizMediaGallery(key)"/>
+
+              <div @click="quizMediaRemove(key)"
+              class="close_image_quiz_btn md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
             </div>
           </div>
         </div>
+        <!-- Media Input (Audio) -->
+        <div v-if="valTypeQuiz[key] == 'audio'" class="w-full relative flex mt-2">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              Audio File
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <div class="md:w-5/6">
+              <input class="inputMediaAudio bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
+            </div>
+          </div>
+        </div>
+
         <!-- Question -->
         <div class="w-full relative flex">
           <div class="md:w-1/4 flex justify-end">
@@ -202,7 +227,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <input class="inputAnswer md:w-1/6" type="text" name="inputAnswer" maxlength="1" placeholder="A/B/C/D">
+            <input class="inputAnswer md:w-1/6" type="text" name="inputAnswer" maxlength="1" placeholder="A/B/C/D/E">
           </div>
         </div>
       </div>
@@ -210,10 +235,10 @@ wp_enqueue_media();
   
     <!-- Preview Kuis -->
     <section class="preview_block w-full flex-1">
-      <div class="w-full" style="background: #acf">
+      <div v-if="showPreview" class="w-full" style="background: #acf">
         <div class="md:w-3/4 flex justify-center mx-auto">
           <p class="text-2xl font-bold rounded max-w-screen-sm text-center py-2 max-w-2xl z-10 break-words leading-tight capitalize">
-            {{ quiz[0].value }}
+            {{ updateQuizValue }}
           </p>
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
