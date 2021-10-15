@@ -9,12 +9,14 @@ new Vue({
             showResult: false,
             showPreview: false,
             questionType: '',
+            choiceNumber: 2, 
             cover: {
-                titleResult: '',
-                excerptResult: '',
+                title: '',
+                excerpt: '',
                 thumbnail: '',
                 buttonText: '',
             },
+            question: [],
             valTypeQuiz: [],
             valQuestion: [],
             valAnswerChoice: [],
@@ -23,6 +25,7 @@ new Vue({
             valQuestionAudio: [],
             valExpAudio: [],
             valExpImage: [],
+            valExplanation: [],
             quiz: [{ value: '' }]
         }
     },
@@ -54,6 +57,14 @@ new Vue({
         }
     }, 
     methods: {
+        addChoiceNumber() {
+            max = 5;
+            return this.choiceNumber <= max ? this.choiceNumber++ : max;
+        },
+        minChoiceNumber() {
+            min = 2;
+            return this.choiceNumber >= min ? this.choiceNumber-- : min;
+        },
         updateExpType(idx) {
             // get media column & show it
             const type = document.getElementsByClassName('inputExpType')[idx].value;
@@ -95,9 +106,39 @@ new Vue({
                     break;
             }
         },
-        addForm() {
+        addForm(idx) {
             this.getInput();
 			this.quiz.push({ value: '' });
+            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
+            const type = document.getElementsByClassName('inputQuizType')[idx].value;
+            let media;
+            if (type == 'image') {
+                media = document.getElementsByClassName('inputMediaImage')[idx].value;
+            } else if (type == 'audio') {
+                media = document.getElementsByClassName('inputMediaAudio')[idx].value;
+            } else {
+                media = ''
+            }
+            const question = document.getElementsByClassName('inputQuestion')[idx].value;
+            const choices = document.getElementsByClassName('choiceCols')[idx].childNodes;
+
+            let choiceBox = []
+            choices.forEach((e, idx) => {
+                choiceBox.push({
+                    'id': idx+1,
+                    'text': e.value
+                })
+            });
+            
+ 
+            this.question.push({
+                'type': type,
+                'url': media,
+                'text': question,
+                'choices': choiceBox
+            })
+
+            console.log(this.question);
 		},
 		getInput(){
 			this.valUrl = []
@@ -114,21 +155,24 @@ new Vue({
             this.valQuestionAudio = []
             this.valExpAudio = []
             this.valExpImage = []
+            this.valExplanation = []
 
+            // Input Explanation Textarea
+            for(var i=0;i<document.getElementsByClassName('inputExplanation').length;i++){
+                this.valExplanation.push(document.getElementsByClassName('inputExplanation')[i].value);
+            }
             // input exp image
             for(var i=0;i<document.getElementsByClassName('inputExpImage').length;i++){
                 if (document.getElementsByClassName('inputExpImage')[i].value !== '') {
                     this.valExpAudio.push(document.getElementsByClassName('inputExpImage')[i].value);
                 }
-            }            
-
+            }
             // input exp audio
             for(var i=0;i<document.getElementsByClassName('inputExpAudio').length;i++){
                 if (document.getElementsByClassName('inputExpAudio')[i].value !== '') {
                     this.valExpAudio.push(document.getElementsByClassName('inputExpAudio')[i].value);
                 }
             }
-
             // input audio question 
             for(var i=0;i<document.getElementsByClassName('inputMediaAudio').length;i++){
                 if (document.getElementsByClassName('inputMediaAudio')[i].value !== '') {
@@ -239,40 +283,48 @@ new Vue({
             document.getElementsByClassName('close_media')[0].style.display = 'none'
             document.getElementsByClassName('upload_image_button')[0].style.display = 'block'
         },
-        generateShortcode() {
-            const self = this;
-
-            let img = document.getElementsByClassName('gallery-img-picked')[0],
-                vid = document.getElementsByClassName('gallery-vid-picked')[0],
-                shortcode;
-            
-            // self.showResult = true;
-            
-            // type video
-            // if (img == undefined || null) {
-            //     this.backgroundResult = ''
-            //     this.videoResult = document.getElementsByClassName('gallery-vid-picked')[0].value;
-            //     shortcode = `{ 'type': '${this.jumbotronType}', 'excerpt': '${this.useExcerpt}', 'url': '${this.videoResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
-            // }
-            // type image
-            // else if(vid == undefined || null) {
-            //     this.videoResult = ''
-            //     shortcode = `{ 'type': '${this.jumbotronType}', 'excerpt': '${this.useExcerpt}', 'url': '${this.backgroundResult}', 'titlePos' : '${this.titlePos}', 'color': '${this.titleColor}', 'titleAlign': '${this.alignText}' }`;
-            // } else {
-            //     shortcode = `{}`
-            // }
-
-            // self.$refs.inputResult.value = shortcode;
-
-        },
         generateId() {
             let date = new Date();
             let d = date.getDate();
             let m = (date.getMonth() + 1); //Month from 0 to 11
             let y = date.getFullYear();
             // remove special character and spacing on title
-            let title = this.cover.titleResult ? (this.cover.titleResult).replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,' ').replace(/\s+/g, '-').toLowerCase() : '';
+            let title = this.cover.title ? (this.cover.title).replace(/[&\/\\#,+()$~%.'":*?<>{}]/g,' ').replace(/\s+/g, '-').toLowerCase() : '';
             return title + '-' + (d <= 9 ? '0' + d : d) +  (m<=9 ? '0' + m : m) +  y;
+        },
+        generateShortcode() {
+            const self = this;
+            this.getInput();
+            self.showResult = true;
+
+            let data = '',
+                choices = '',
+                quizId = this.generateId();
+
+            for (var i=0; i<document.getElementsByClassName('inputQuestion').length; i++) {
+                
+            }
+
+            // for (var i=0; i<document.getElementsByClassName('inputQuestion').length; i++) {
+            //     data += `({
+            //         'question': {
+            //             'type': '${this.valTypeQuiz[i]}',
+            //             'urlAudio': '${this.valQuestionAudio[i]}',
+            //             'urlImage': '${this.valQuestionImage[i]}',
+            //             'text': '${this.valQuestion[i]}',
+            //         },
+            //         'choices': ({
+            //             'id': 1,
+            //             'text': '${this.valAnswerChoice[i]}'
+            //         })
+            //     })`
+            // }
+
+            // return `[InteractiveQuiz 
+            // id='${quizId}' cover= {'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.thumbnail}', 'button': '${this.cover.buttonText}'}
+
+            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
+            // /]`
         }
     },
     mounted() {

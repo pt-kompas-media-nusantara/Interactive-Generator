@@ -40,7 +40,7 @@ wp_enqueue_media();
             <div class="md:w-3/4 relative">
               <div class="md:w-full">
                 <input 
-                  v-model="cover.titleResult"
+                  v-model="cover.title"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
                   type="text" maxlength="120"
                   name="view" required 
@@ -59,7 +59,7 @@ wp_enqueue_media();
             <div class="md:w-3/4 relative">
               <div class="md:w-full">
                 <input 
-                  v-model="cover.excerptResult"
+                  v-model="cover.excerpt"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
                   type="text" maxlength="120"
                   name="view" required 
@@ -115,12 +115,12 @@ wp_enqueue_media();
       <div class="w-full">
         <div class="md:w-3/4 flex justify-center mx-auto">
           <p class="text-2xl font-bold rounded max-w-screen-sm text-center py-2 max-w-2xl z-10 break-words leading-tight capitalize">
-            {{ cover.titleResult }}
+            {{ cover.title }}
           </p>
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
           <p class="text-lg rounded max-w-screen-sm py-2 max-w-2xl text-center z-10 break-words">
-            {{ cover.excerptResult }}
+            {{ cover.excerpt }}
           </p>
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
@@ -211,12 +211,17 @@ wp_enqueue_media();
               Input Choices <sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
-          <div class="md:w-3/4 flex flex-col relative items-center justify-start">
-            <input class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion" placeholder="A.  ">
-            <input class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion" placeholder="B.  ">
-            <input class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion" placeholder="C.  ">
-            <input class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion" placeholder="D.  ">
-            <input class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion" placeholder="E.  ">
+          <div class="choiceCols md:w-3/4 flex flex-col relative items-center justify-start">
+            <input v-for="(choice, idx) in choiceNumber" :key="idx"
+            class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion">
+          </div>
+        </div>
+        <div class="w-full flex justify-end pr-4">
+          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="choiceNumber>2" @click="minChoiceNumber();">
+            -
+          </div>
+          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" v-if="choiceNumber<5" @click="addChoiceNumber()">
+            +
           </div>
         </div>
 
@@ -283,7 +288,7 @@ wp_enqueue_media();
             </div>
           </div>
         </div>
-
+        <!-- Exp Textarea -->
         <div class="w-full relative flex mb-3">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
@@ -292,6 +297,23 @@ wp_enqueue_media();
           </div>
           <div class="md:w-3/4 flex">
             <textarea class="inputExplanation" name="inputExp" rows="4" cols="75" placeholder="penjelasan disini" maxlength="200"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex mt-4 max-w-3xl">
+        <div class="md:w-1/4"></div>
+        <div class="md:w-3/4">
+          <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="generateShortcode()">
+            <span>Generate Shortcode</span>
+          </div>
+          <div class="inline-flex float-right">
+            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();showResult = false;">
+              -
+            </div>
+            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="addForm(key);showResult = false;">
+              +
+            </div>
           </div>
         </div>
       </div>
@@ -307,7 +329,7 @@ wp_enqueue_media();
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
           <p class="text-lg rounded max-w-screen-sm py-2 max-w-2xl text-center z-10 break-words">
-            {{ cover.excerptResult }}
+            {{ cover.excerpt }}
           </p>
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
@@ -325,21 +347,15 @@ wp_enqueue_media();
       </div>
     </section>
   </div>
-  
-  <div class="flex mt-4 max-w-3xl">
-    <div class="md:w-1/4"></div>
+
+  <div class="md:flex md:items-center mb-2 opacity-0" v-bind:class="{ show : showResult }">
+    <div class="md:w-1/4">
+      <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+        Salin Shortcode ini
+      </label>
+    </div>
     <div class="md:w-3/4">
-      <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="createShortCode()">
-        <span>Generate Shortcode</span>
-      </div>
-      <div class="inline-flex float-right">
-        <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();showResult = false;">
-          -
-        </div>
-        <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="addForm();showResult = false;">
-          +
-        </div>
-      </div>
+      <textarea class="inputResult form-textarea appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 text-base" rows="30" name="text" ref="inputResult"></textarea>
     </div>
   </div>
 </section>
