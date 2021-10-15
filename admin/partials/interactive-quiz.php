@@ -151,15 +151,16 @@ wp_enqueue_media();
               Tipe Pertanyaan <sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
-          <select @change="updateType(key)"
+          <select @change="updateType(key) "
             class="inputQuizType md:w-1/6 flex relative items-center" name="inputQuizType">
             <option value="default" selected="selected">default</option>
             <option value="image">image</option>
             <option value="audio">audio</option>
           </select>
         </div>
+
         <!-- Media Input (Image) -->
-        <div v-if="valTypeQuiz[key] == 'image'" class="w-full relative flex mt-2">
+        <div class="imageMedia w-full relative mt-2 hidden">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
               Thumbnail
@@ -178,7 +179,7 @@ wp_enqueue_media();
           </div>
         </div>
         <!-- Media Input (Audio) -->
-        <div v-if="valTypeQuiz[key] == 'audio'" class="w-full relative flex mt-2">
+        <div class="audioMedia w-full relative mt-2 hidden">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
               Audio File
@@ -228,6 +229,69 @@ wp_enqueue_media();
           </div>
           <div class="md:w-3/4 flex relative items-center">
             <input class="inputAnswer md:w-1/6" type="text" name="inputAnswer" maxlength="1" placeholder="A/B/C/D/E">
+          </div>
+        </div>
+
+        <div class="md:w-full">
+          <div class="md:w-5/6 border-t-2 border-fuchsia-600 mx-auto"></div>
+        </div>
+
+        <!-- Explanation -->
+        <!-- Exp-Type -->
+        <div class="w-full relative flex mt-2 mb-2">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-2">
+              Explanation Type <sup class="text-red-600 font-bold text-sm">*</sup>
+            </label>
+          </div>
+          <select @change="updateExpType(key)"
+            class="inputExpType md:w-1/6 flex relative items-center" name="inputExpType">
+            <option value="default" selected="selected">default</option>
+            <option value="image">image</option>
+            <option value="audio">audio</option>
+          </select>
+        </div>
+        <!-- Media Exp Input (Image) -->
+        <div class="imageExpMedia w-full relative mt-2 hidden">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              Thumbnail
+            </label>
+          </div>
+          <div class="md:w-3/4 relative mb-3">
+            <div class="md:w-5/6">
+              <input class="inputExpImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
+              <input type="button" 
+                class="button upload_image_quiz_btn"
+                value="<?php _e( 'Upload gambar' ); ?>" @click="quizMediaGallery(key)"/>
+
+              <div @click="quizMediaRemove(key)"
+              class="close_image_quiz_btn md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
+            </div>
+          </div>
+        </div>
+        <!-- Media Exp Input (Audio) -->
+        <div class="audioExpMedia w-full relative mt-2 hidden">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              Audio File
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <div class="md:w-5/6">
+              <input class="inputExpAudio bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full relative flex mb-3">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
+              Explanation<sup class="text-red-600 font-bold text-sm">*</sup>
+            </label>
+          </div>
+          <div class="md:w-3/4 flex">
+            <textarea class="inputExplanation" name="inputExp" rows="4" cols="75" placeholder="penjelasan disini" maxlength="200"></textarea>
           </div>
         </div>
       </div>

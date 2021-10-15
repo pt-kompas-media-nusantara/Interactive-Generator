@@ -21,13 +21,12 @@ new Vue({
             valRightChoice: [],
             valQuestionImage: [],
             valQuestionAudio: [],
+            valExpAudio: [],
+            valExpImage: [],
             quiz: [{ value: '' }]
         }
     },
     computed: {
-        // inputTypeIndex() {
-        //     return document.getElementsByClassName('inputQuizType').length - 1;
-        // },
         updateQuizValue() {
             return this.quiz[0].value
         },
@@ -52,15 +51,49 @@ new Vue({
                     return 'text-center'
                     break;
             }
-        },
-        // updateType() {
-        //     let type = document.getElementsByClassName('inputQuizType');
-        //     return document.getElementsByClassName('inputQuizType')[type.length-1].value
-        // }
+        }
     }, 
     methods: {
+        updateExpType(idx) {
+            // get media column & show it
+            const type = document.getElementsByClassName('inputExpType')[idx].value;
+            const img = document.getElementsByClassName('imageExpMedia')[idx];
+            const audio = document.getElementsByClassName('audioExpMedia')[idx];
+            console.log(type, 'type');
+            switch (type) {
+                case 'audio':
+                    audio.style.display = 'flex';
+                    img.style.display = 'none';
+                    break;
+                case 'image':
+                    img.style.display = 'flex';
+                    audio.style.display = 'none';
+                    break;
+                default:
+                    img.style.display = 'none';
+                    audio.style.display = 'none';
+                    break;
+            }
+        },
         updateType(idx) {
-            this.questionType = document.getElementsByClassName('inputQuizType')[idx].value;
+            // get media column & show it
+            const type = document.getElementsByClassName('inputQuizType')[idx].value;
+            const img = document.getElementsByClassName('imageMedia')[idx];
+            const audio = document.getElementsByClassName('audioMedia')[idx];
+            switch (type) {
+                case 'audio':
+                    audio.style.display = 'flex';
+                    img.style.display = 'none';
+                    break;
+                case 'image':
+                    img.style.display = 'flex';
+                    audio.style.display = 'none';
+                    break;
+                default:
+                    img.style.display = 'none';
+                    audio.style.display = 'none';
+                    break;
+            }
         },
         addForm() {
             this.getInput();
@@ -79,14 +112,34 @@ new Vue({
             this.valRightChoice = []
             this.valQuestionImage = []
             this.valQuestionAudio = []
+            this.valExpAudio = []
+            this.valExpImage = []
+
+            // input exp image
+            for(var i=0;i<document.getElementsByClassName('inputExpImage').length;i++){
+                if (document.getElementsByClassName('inputExpImage')[i].value !== '') {
+                    this.valExpAudio.push(document.getElementsByClassName('inputExpImage')[i].value);
+                }
+            }            
+
+            // input exp audio
+            for(var i=0;i<document.getElementsByClassName('inputExpAudio').length;i++){
+                if (document.getElementsByClassName('inputExpAudio')[i].value !== '') {
+                    this.valExpAudio.push(document.getElementsByClassName('inputExpAudio')[i].value);
+                }
+            }
 
             // input audio question 
-            for(var i=0;i<document.getElementsByClassName('inputMediaImage').length;i++){
-                this.valQuestionImage.push(document.getElementsByClassName('inputMediaImage')[i].value);
+            for(var i=0;i<document.getElementsByClassName('inputMediaAudio').length;i++){
+                if (document.getElementsByClassName('inputMediaAudio')[i].value !== '') {
+                    this.valQuestionAudio.push(document.getElementsByClassName('inputMediaAudio')[i].value);
+                }
             }
             // input image question 
             for(var i=0;i<document.getElementsByClassName('inputMediaImage').length;i++){
-                this.valQuestionImage.push(document.getElementsByClassName('inputMediaImage')[i].value);
+                if (document.getElementsByClassName('inputMediaImage')[i].value !== '') {
+                    this.valQuestionImage.push(document.getElementsByClassName('inputMediaImage')[i].value);
+                }
             }            
             // input answer choice
             for(var i=0;i<document.getElementsByClassName('inputAnswer').length;i++){
