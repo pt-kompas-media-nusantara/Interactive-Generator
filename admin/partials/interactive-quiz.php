@@ -225,15 +225,36 @@ wp_enqueue_media();
           </div>
         </div>
 
-        <!-- Right Answer -->
+        <!-- Answer-Count -->
         <div class="w-full relative flex">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
-              Answer <sup class="text-red-600 font-bold text-sm">*</sup>
+              Jumlah Jawaban Benar<sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <input class="inputAnswer md:w-1/6" type="text" name="inputAnswer" maxlength="1" placeholder="A/B/C/D/E">
+            <select @change="updateAnswerCount(key) "
+              class="inputAnswerCount md:w-1/6 flex relative items-center" name="inputAnswerCount">
+              <option value="1" selected="selected">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Answer -->
+        <div class="w-full relative flex">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
+              Jawaban Benar<sup class="text-red-600 font-bold text-sm">*</sup>
+            </label>
+          </div>
+          <div class="md:w-3/4 flex relative items-center justify-between">
+            <input type="checkbox" id="1" name="1" value="1">
+            <label for="1">A</label><br>
+            <input type="checkbox" id="2" name="2" value="2">
+            <label for="2">B</label><br>
           </div>
         </div>
 
@@ -308,7 +329,7 @@ wp_enqueue_media();
             <span>Generate Shortcode</span>
           </div>
           <div class="inline-flex float-right">
-            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();showResult = false;">
+            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();question.pop();showResult = false;">
               -
             </div>
             <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="addForm(key);showResult = false;">

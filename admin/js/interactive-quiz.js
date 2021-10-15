@@ -57,6 +57,10 @@ new Vue({
         }
     }, 
     methods: {
+        updateAnswerCount(idx) {
+            const count = document.getElementsByClassName('inputAnswerCount')[idx].value;
+            
+        },
         addChoiceNumber() {
             max = 5;
             return this.choiceNumber <= max ? this.choiceNumber++ : max;
@@ -129,16 +133,13 @@ new Vue({
                     'text': e.value
                 })
             });
-            
- 
+
             this.question.push({
                 'type': type,
                 'url': media,
                 'text': question,
                 'choices': choiceBox
             })
-
-            console.log(this.question);
 		},
 		getInput(){
 			this.valUrl = []
