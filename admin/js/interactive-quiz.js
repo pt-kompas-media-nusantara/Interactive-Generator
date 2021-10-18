@@ -17,6 +17,7 @@ new Vue({
                 buttonText: '',
             },
             question: [],
+
             valTypeQuiz: [],
             valQuestion: [],
             valAnswerChoice: [],
@@ -57,9 +58,28 @@ new Vue({
         }
     }, 
     methods: {
+        updateAnswerChoice(limit = 1, idx) {
+            let target = document.getElementsByClassName('inputAnswerCover')[idx];
+            let input = target.querySelectorAll('input.inputAnswer');
+            let count = 0;
+            // get only checked value
+            input.forEach(e => {
+                e.addEventListener('change', () => {
+                    if(e.checked == true) {
+                        count++;
+                    }
+                    if (count > limit) {
+                        e.checked = false
+                    }
+                })
+            })
+
+        },
         updateAnswerCount(idx) {
-            const count = document.getElementsByClassName('inputAnswerCount')[idx].value;
-            
+            const limit = document.getElementsByClassName('inputAnswerCount')[idx].value;
+            const column = document.getElementsByClassName('answerColumn')[idx];
+            column.style.display = 'flex';
+            this.updateAnswerChoice(limit, idx)
         },
         addChoiceNumber() {
             max = 5;
@@ -74,7 +94,6 @@ new Vue({
             const type = document.getElementsByClassName('inputExpType')[idx].value;
             const img = document.getElementsByClassName('imageExpMedia')[idx];
             const audio = document.getElementsByClassName('audioExpMedia')[idx];
-            console.log(type, 'type');
             switch (type) {
                 case 'audio':
                     audio.style.display = 'flex';
@@ -113,7 +132,6 @@ new Vue({
         addForm(idx) {
             this.getInput();
 			this.quiz.push({ value: '' });
-            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
             const type = document.getElementsByClassName('inputQuizType')[idx].value;
             let media;
             if (type == 'image') {
@@ -125,6 +143,13 @@ new Vue({
             }
             const question = document.getElementsByClassName('inputQuestion')[idx].value;
             const choices = document.getElementsByClassName('choiceCols')[idx].childNodes;
+            const rightChoiceNumber = document.getElementsByClassName('inputAnswerCount')[idx].value;
+            const inputAnswer = document.getElementsByClassName('inputAnswerCover')[idx];
+            let input = inputAnswer.querySelectorAll('input.inputAnswer:checked');
+            let jawaban = []
+            input.forEach(e => {
+                jawaban.push(e.value)
+            });
 
             let choiceBox = []
             choices.forEach((e, idx) => {
@@ -134,13 +159,46 @@ new Vue({
                 })
             });
 
+            // explanation value
+            let expType = document.getElementsByClassName('inputExpType')[idx].value;
+            let explanation = document.getElementsByClassName('inputExplanation')[idx].value;
+            let expUrl;
+            if (expType == 'image') {
+                expUrl = document.getElementsByClassName('inputExpImage')[idx].value;
+            } else if (expType == 'audio') {
+                expUrl = document.getElementsByClassName('inputExpAudio')[idx].value;
+            } else {
+                expUrl = ''
+            }
+            
             this.question.push({
                 'type': type,
                 'url': media,
                 'text': question,
-                'choices': choiceBox
+                'choices': choiceBox,
+                'choicecount': rightChoiceNumber,
+                'answer': {
+                    'correct': jawaban,
+                    'header': {
+                        'type': expType,
+                        'url': expUrl
+                    },
+                    'text': explanation
+                }
             })
+            
+            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
+            // /]`
+
+            // remove column after add form
+            const addForm = document.getElementsByClassName('addColumn')[idx];
+            addForm.style.display = 'none'
 		},
+        showColBefore(idx) {
+            const form = document.getElementsByClassName('addColumn')[idx-1];
+            form.style.display = 'flex'
+            console.log(form)
+        },
 		getInput(){
 			this.valUrl = []
 			this.valCredit = []
@@ -221,6 +279,27 @@ new Vue({
 				this.valInputButtonLabel.push(document.getElementsByClassName('inputButtonLabel')[i].value);
 			}
 		},
+        expMediaGallery(idx) {
+            const self = this;
+            let file_frame;
+            file_frame = wp.media.frames.file_frame = wp.media({
+                title: 'Pilih gambar untuk di upload',
+                button: {
+                    text: 'Gunakan gambar ini',
+                },
+                multiple: false
+            });
+
+            file_frame.on( 'select', function() {
+                var attachment = file_frame.state().get('selection').first().toJSON();
+                // document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url;
+                document.getElementsByClassName('inputExpImage')[idx].value = attachment.url;
+                document.getElementsByClassName('upload_image_exp_btn')[idx].style.display = 'none'
+                document.getElementsByClassName('close_image_exp_btn')[idx].style.display = 'block'
+            })
+
+			file_frame.open();
+        },
         quizMediaGallery(idx) {
             const self = this;
             let file_frame;

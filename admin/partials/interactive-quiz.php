@@ -235,7 +235,7 @@ wp_enqueue_media();
           <div class="md:w-3/4 flex relative items-center">
             <select @change="updateAnswerCount(key) "
               class="inputAnswerCount md:w-1/6 flex relative items-center" name="inputAnswerCount">
-              <option value="1" selected="selected">1</option>
+              <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
@@ -244,17 +244,18 @@ wp_enqueue_media();
         </div>
 
         <!-- Answer -->
-        <div class="w-full relative flex">
+        <div class="answerColumn w-full relative flex hidden">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
               Jawaban Benar<sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
-          <div class="md:w-3/4 flex relative items-center justify-between">
-            <input type="checkbox" id="1" name="1" value="1">
-            <label for="1">A</label><br>
-            <input type="checkbox" id="2" name="2" value="2">
-            <label for="2">B</label><br>
+          <div class="inputAnswerCover md:w-1/3 flex relative items-center justify-between">
+            <input class="inputAnswer mr-2" type="checkbox" id="1" name="1" value="1">A
+            <input class="inputAnswer mr-2" type="checkbox" id="2" name="2" value="2">B
+            <input class="inputAnswer mr-2" type="checkbox" id="3" name="3" value="3">C
+            <input class="inputAnswer mr-2" type="checkbox" id="4" name="4" value="4">D
+            <input class="inputAnswer mr-2" type="checkbox" id="5" name="5" value="5">E
           </div>
         </div>
 
@@ -288,11 +289,11 @@ wp_enqueue_media();
             <div class="md:w-5/6">
               <input class="inputExpImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
               <input type="button" 
-                class="button upload_image_quiz_btn"
-                value="<?php _e( 'Upload gambar' ); ?>" @click="quizMediaGallery(key)"/>
+                class="button upload_image_exp_btn"
+                value="<?php _e( 'Upload gambar' ); ?>" @click="expMediaGallery(key)"/>
 
-              <div @click="quizMediaRemove(key)"
-              class="close_image_quiz_btn md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
+              <div @click="expMediaRemove(key)"
+              class="close_image_exp_btn md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
             </div>
           </div>
         </div>
@@ -322,14 +323,14 @@ wp_enqueue_media();
         </div>
       </div>
 
-      <div class="flex mt-4 max-w-3xl">
+      <div class="addColumn flex mt-4 max-w-3xl">
         <div class="md:w-1/4"></div>
         <div class="md:w-3/4">
           <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="generateShortcode()">
             <span>Generate Shortcode</span>
           </div>
           <div class="inline-flex float-right">
-            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();question.pop();showResult = false;">
+            <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();question.pop();showResult = false; showColBefore(key)">
               -
             </div>
             <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" @click="addForm(key);showResult = false;">
