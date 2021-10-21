@@ -6,18 +6,18 @@ new Vue({
     data() {
         return {
             id: '',
+            rightAnswerSum: 1,
             showResult: false,
             showPreview: false,
             questionType: '',
-            choiceNumber: 2, 
+            choiceNumber: 2,
             cover: {
+                image: '',
                 title: '',
                 excerpt: '',
-                thumbnail: '',
-                buttonText: '',
+                button: ''
             },
             question: [],
-
             valTypeQuiz: [],
             valQuestion: [],
             valAnswerChoice: [],
@@ -35,7 +35,7 @@ new Vue({
             return this.quiz[0].value
         },
         selectedBackground() {
-            return this.backgroundResult;
+            return this.cover.image;
         },
         updateQuizId() {
             this.id = this.generateId();
@@ -59,27 +59,38 @@ new Vue({
     }, 
     methods: {
         updateAnswerChoice(limit = 1, idx) {
-            let target = document.getElementsByClassName('inputAnswerCover')[idx];
-            let input = target.querySelectorAll('input.inputAnswer');
-            let count = 0;
+            let inputCover = document.getElementsByClassName('inputAnswerCover')[idx];
+            let inputAnswer = inputCover.querySelectorAll('input.inputAnswer');
+            let choiceCol = document.querySelectorAll('input.inputAnswerChoice');
+            for(let i=0; i<inputAnswer.length; i++) {
+                if (i < choiceCol.length) {
+                    inputAnswer[i].disabled = false;
+                } else {
+                    inputAnswer[i].disabled = true;
+                }
+            }
+            
             // get only checked value
-            input.forEach(e => {
-                e.addEventListener('change', () => {
-                    if(e.checked == true) {
-                        count++;
-                    }
-                    if (count > limit) {
-                        e.checked = false
-                    }
-                })
-            })
-
+            // console.log('limit:', limit)
+            // inputAnswer.forEach(e => {
+            //     e.addEventListener('change', () => {
+            //         let count = 0;
+            //         console.log('count: ', count)
+            //         if (count > limit) {
+            //             e.checked = false;
+            //         } else {
+            //             count++;
+            //         }
+            //     })
+            // })
         },
         updateAnswerCount(idx) {
             const limit = document.getElementsByClassName('inputAnswerCount')[idx].value;
             const column = document.getElementsByClassName('answerColumn')[idx];
+            
             column.style.display = 'flex';
             this.updateAnswerChoice(limit, idx)
+            return limit;
         },
         addChoiceNumber() {
             max = 5;
@@ -186,9 +197,6 @@ new Vue({
                     'text': explanation
                 }
             })
-            
-            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
-            // /]`
 
             // remove column after add form
             const addForm = document.getElementsByClassName('addColumn')[idx];
@@ -215,69 +223,7 @@ new Vue({
             this.valExpAudio = []
             this.valExpImage = []
             this.valExplanation = []
-
-            // Input Explanation Textarea
-            for(var i=0;i<document.getElementsByClassName('inputExplanation').length;i++){
-                this.valExplanation.push(document.getElementsByClassName('inputExplanation')[i].value);
-            }
-            // input exp image
-            for(var i=0;i<document.getElementsByClassName('inputExpImage').length;i++){
-                if (document.getElementsByClassName('inputExpImage')[i].value !== '') {
-                    this.valExpAudio.push(document.getElementsByClassName('inputExpImage')[i].value);
-                }
-            }
-            // input exp audio
-            for(var i=0;i<document.getElementsByClassName('inputExpAudio').length;i++){
-                if (document.getElementsByClassName('inputExpAudio')[i].value !== '') {
-                    this.valExpAudio.push(document.getElementsByClassName('inputExpAudio')[i].value);
-                }
-            }
-            // input audio question 
-            for(var i=0;i<document.getElementsByClassName('inputMediaAudio').length;i++){
-                if (document.getElementsByClassName('inputMediaAudio')[i].value !== '') {
-                    this.valQuestionAudio.push(document.getElementsByClassName('inputMediaAudio')[i].value);
-                }
-            }
-            // input image question 
-            for(var i=0;i<document.getElementsByClassName('inputMediaImage').length;i++){
-                if (document.getElementsByClassName('inputMediaImage')[i].value !== '') {
-                    this.valQuestionImage.push(document.getElementsByClassName('inputMediaImage')[i].value);
-                }
-            }            
-            // input answer choice
-            for(var i=0;i<document.getElementsByClassName('inputAnswer').length;i++){
-                this.valRightChoice.push(document.getElementsByClassName('inputAnswer')[i].value);
-            }
-            // input answer choice
-            for(var i=0;i<document.getElementsByClassName('inputAnswerChoice').length;i++){
-				this.valAnswerChoice.push(document.getElementsByClassName('inputAnswerChoice')[i].value);
-			}
-            // input type question
-            for(var i=0;i<document.getElementsByClassName('inputQuizType').length;i++){
-				this.valTypeQuiz.push(document.getElementsByClassName('inputQuizType')[i].value);
-			}
-            // input question
-            for(var i=0;i<document.getElementsByClassName('inputQuestion').length;i++){
-				this.valQuestion.push(document.getElementsByClassName('inputQuestion')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputUrl').length;i++){
-				this.valUrl.push(document.getElementsByClassName('inputUrl')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputCredit').length;i++){
-				this.valCredit.push(document.getElementsByClassName('inputCredit')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputTitle').length;i++){
-				this.valTitle.push(document.getElementsByClassName('inputTitle')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputText').length;i++){
-				this.valText.push(document.getElementsByClassName('inputText')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputButton').length;i++){
-				this.valInputButton.push(document.getElementsByClassName('inputButton')[i].value);
-			}
-			for(var i=0;i<document.getElementsByClassName('inputButtonLabel').length;i++){
-				this.valInputButtonLabel.push(document.getElementsByClassName('inputButtonLabel')[i].value);
-			}
+            
 		},
         expMediaGallery(idx) {
             const self = this;
@@ -330,7 +276,7 @@ new Vue({
             // document.getElementsByClassName('gallery-img-picked')[0].style.display = 'none'
             // document.getElementsByClassName('gallery-img-picked')[0].src = '';
         },
-        galleryOpenMedia() {
+        chooseCoverImage() {
             const self = this;
 			var file_frame;
 			file_frame = wp.media.frames.file_frame = wp.media({
@@ -340,23 +286,27 @@ new Vue({
 				},
 				multiple: false // Set to true to allow multiple files to be selected
 			});
+
             
-			file_frame.on( 'select', function() {
+            
+			file_frame.on('select', function() {
 				var attachment = file_frame.state().get('selection').first().toJSON();
-				document.getElementsByClassName('gallery-img-picked')[0].style.display = 'block'
-				document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url
-				document.getElementsByClassName('inputUrl')[0].value = attachment.url
-                self.backgroundResult = attachment.url;
-                document.getElementsByClassName('close_media')[0].style.display = 'block'
-                document.getElementsByClassName('upload_image_button')[0].style.display = 'none'
+				document.getElementsByClassName('gallery-img-picked')[0].style.display = 'block';
+				document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url;
+				document.getElementsByClassName('inputCoverImage')[0].value = attachment.url;
+                self.cover.image = attachment.url;
+                // document.getElementsByClassName('close_media')[0].style.display = 'block'
+                // document.getElementsByClassName('upload_image_button')[0].style.display = 'none'
 			});
-            
+            // this.cover.thumbnail = document.getElementsByClassName('inputCoverImage')[0].value;
 			file_frame.open();
+            // console.log(document.getElementsByClassName('inputCoverImage')[0].value, 'src')
+
 		}, 
-        removeMedia() {
+        removeCoverImage() {
             const self = this;
-            self.backgroundResult = '';
-            document.getElementsByClassName('inputUrl')[0].value = '';
+            self.cover.image = '';
+            document.getElementsByClassName('inputCoverImage')[0].value = '';
             document.getElementsByClassName('gallery-img-picked')[0].src = '';
             document.getElementsByClassName('gallery-img-picked')[0].style.display = 'none'
 
@@ -381,30 +331,27 @@ new Vue({
                 choices = '',
                 quizId = this.generateId();
 
-            for (var i=0; i<document.getElementsByClassName('inputQuestion').length; i++) {
-                
+            // data sesuai pertanyaan
+            let question = document.getElementsByClassName('inputQuestion');
+            for (let i=0; i<question.length; i++) {
+                data += this.question[i]
             }
+            
+            const shortcode = 
+            `[InteractiveQuiz 
+                id='${quizId}' 
+                cover= {
+                    'title': '${this.cover.title}', 
+                    'excerpt': '${this.cover.excerpt}', 
+                    'thumbnail': '${this.cover.image}', 
+                    'button': '${this.cover.button}'} 
+            /]`;
 
-            // for (var i=0; i<document.getElementsByClassName('inputQuestion').length; i++) {
-            //     data += `({
-            //         'question': {
-            //             'type': '${this.valTypeQuiz[i]}',
-            //             'urlAudio': '${this.valQuestionAudio[i]}',
-            //             'urlImage': '${this.valQuestionImage[i]}',
-            //             'text': '${this.valQuestion[i]}',
-            //         },
-            //         'choices': ({
-            //             'id': 1,
-            //             'text': '${this.valAnswerChoice[i]}'
-            //         })
-            //     })`
-            // }
-
-            // return `[InteractiveQuiz 
-            // id='${quizId}' cover= {'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.thumbnail}', 'button': '${this.cover.buttonText}'}
-
+            
             // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
             // /]`
+
+			this.$refs.inputResult.value = shortcode;
         }
     },
     mounted() {

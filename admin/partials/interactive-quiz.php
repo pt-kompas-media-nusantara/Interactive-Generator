@@ -63,7 +63,7 @@ wp_enqueue_media();
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
                   type="text" maxlength="120"
                   name="view" required 
-                  placeholder="Wajib diisi" ref="coverExcerpt">
+                  placeholder="Excerpt untuk cover" ref="coverExcerpt">
               </div>
             </div>
           </div>
@@ -77,12 +77,14 @@ wp_enqueue_media();
             </div>
             <div class="md:w-3/4 relative">
               <div class="md:w-5/6">
-                <input class="inputUrl bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="url" name="url">
+                <input 
+                  class="inputCoverImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="text" name="thumbnailUrl" placeholder="pilih gambar untuk cover">
+
                 <input type="button" 
                   class="button upload_image_button"
-                  value="<?php _e( 'Upload gambar' ); ?>" @click="galleryOpenMedia()"/>
+                  value="<?php _e( 'Upload gambar' ); ?>" @click="chooseCoverImage()"/>
   
-                <div @click="removeMedia()"
+                <div @click="removeCoverImage()"
                 class="close_media md:w-1/3 rounded uppercase p-1 text-center cursor-pointer bg-red-400 hidden">Hapus Gambar</div>
               </div>
             </div>
@@ -98,11 +100,11 @@ wp_enqueue_media();
             <div class="md:w-3/4 relative">
               <div class="md:w-1/3">
                 <input 
-                  v-model="cover.buttonText"
+                  v-model="cover.button"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
                   type="text" maxlength="20"
-                  name="view" required 
-                  placeholder="Text Button" ref="buttonText">
+                  name="view" required
+                  placeholder="Text Button">
               </div>
             </div>
           </div>
@@ -124,15 +126,15 @@ wp_enqueue_media();
           </p>
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
-          <img class="gallery-img-picked mb-2 relative rounded" 
-            v-model="cover.thumbnail"
+          <img class="gallery-img-picked mb-2 relative rounded hidden"
+            v-model="cover.image"
             alt="picked-img"
-            style="width:auto; display:none;">
+            style="width:auto;">
         </div>
         <div class="w-full flex justify-center">
-          <div v-if="cover.buttonText"
+          <div v-if="cover.button"
             class="text-white font-bold py-2 px-4 rounded inline-flex items-center" style="width:auto; background: #50A718">
-            <p class="text-center">{{ cover.buttonText }}</p>
+            <p class="text-center">{{ cover.button }}</p>
           </div>
         </div>
       </div>
@@ -213,7 +215,7 @@ wp_enqueue_media();
           </div>
           <div class="choiceCols md:w-3/4 flex flex-col relative items-center justify-start">
             <input v-for="(choice, idx) in choiceNumber" :key="idx"
-            class="inputAnswerChoice mb-2 md:w-3/4" type="text" name="inputQuestion">
+            class="inputAnswerChoice mb-2 md:w-3/4" type="text">
           </div>
         </div>
         <div class="w-full flex justify-end pr-4">
@@ -233,13 +235,11 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <select @change="updateAnswerCount(key) "
+            <select @click="updateAnswerCount(key)"
               class="inputAnswerCount md:w-1/6 flex relative items-center" name="inputAnswerCount">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
+              <option v-for="(item, id) in choiceNumber" :key="id" :value="id+1">{{ id + 1 }}</option>
             </select>
+            <div class="ml-3 flex justify-start text-gray">&#42 Centang jawaban sesuai jumlah</div>
           </div>
         </div>
 
@@ -356,7 +356,6 @@ wp_enqueue_media();
         </div>
         <div class="md:w-3/4 flex justify-center mx-auto">
           <img class="gallery-img-picked mb-2 relative rounded" 
-            v-model="cover.thumbnail"
             alt="picked-img"
             style="width:auto; display:none;">
         </div>
@@ -370,8 +369,8 @@ wp_enqueue_media();
     </section>
   </div>
 
-  <div class="md:flex md:items-center mb-2 opacity-0" v-bind:class="{ show : showResult }">
-    <div class="md:w-1/4">
+  <div class="md:flex md:items-center mb-2 opacity-0 mt-3" v-bind:class="{ show : showResult }">
+    <div class="md:w-1/6">
       <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
         Salin Shortcode ini
       </label>
