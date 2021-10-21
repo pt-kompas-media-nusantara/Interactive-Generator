@@ -325,14 +325,12 @@ new Vue({
 
             for (let j=0; j<this.question.length; j++) {
                 this.question[j].choices.forEach(e => {
-                    choices += `{'id': ${e.id},'text': ${e.text}}, `
+                    choices += `{'id': ${e.id},'text': ${e.text}},`
                 })
             }
-
-            console.log(this.choices);
+            choices = choices.replace(/.$/, "");
 
             for (let l=0; l<this.question.length; l++) {
-                console.log(this.question[l].answer);
                 answers += `{
                     'correct': (${this.question[l].answer.correct}),
                     'header': {
@@ -344,9 +342,7 @@ new Vue({
             }
 
             // data sesuai pertanyaan
-            // let inputQuestion = document.getElementsByClassName('inputQuestion');
             for (let i=0; i<this.question.length; i++) {
-                // console.log(this.question[i]);
                 data += `
                     'question': {
                         'type': '${this.question[i].type}',
