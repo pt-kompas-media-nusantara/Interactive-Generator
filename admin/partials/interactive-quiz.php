@@ -213,17 +213,20 @@ wp_enqueue_media();
               Input Choices <sup class="text-red-600 font-bold text-sm">*</sup>
             </label>
           </div>
-          <div class="choiceCols md:w-3/4 flex flex-col relative items-center justify-start">
-            <input v-for="(choice, idx) in choiceNumber" :key="idx"
-            class="inputAnswerChoice mb-2 md:w-3/4" type="text">
+          <div class="md:w-3/4 flex flex-col relative justify-start">
+            <select @click="inputChoicesNumber(key)"
+              class="inputChoices md:w-1/6 flex relative" name="inputChoices">
+              <option v-for="item in 5" :key="item" :value="item" v-if="item >= 2">{{ item }}</option>
+            </select>
           </div>
         </div>
-        <div class="w-full flex justify-end pr-4">
-          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="choiceNumber>2" @click="minChoiceNumber();">
-            -
-          </div>
-          <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 text-base rounded-sm" v-if="choiceNumber<5" @click="addChoiceNumber()">
-            +
+
+        <!-- Choices-Text -->
+        <div class="w-full relative flex">
+          <div class="md:w-1/4 flex justify-end items-center"></div>
+          <div class="choiceCols md:w-3/4 flex flex-col relative justify-start">
+            <input v-for="(item, index) in choiceNumber[key]"  :key="index"
+              class="inputAnswerChoice mb-2 md:w-full" type="text">
           </div>
         </div>
 
@@ -237,7 +240,7 @@ wp_enqueue_media();
           <div class="md:w-3/4 flex relative items-center">
             <select @click="updateAnswerCount(key)"
               class="inputAnswerCount md:w-1/6 flex relative items-center" name="inputAnswerCount">
-              <option v-for="(item, id) in choiceNumber" :key="id" :value="id+1">{{ id + 1 }}</option>
+              <option v-for="(item, id) in choiceNumber[key]" :key="id" :value="id+1">{{ id + 1 }}</option>
             </select>
             <div class="ml-3 flex justify-start text-gray">&#42 Centang jawaban sesuai jumlah</div>
           </div>
@@ -251,11 +254,11 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="inputAnswerCover md:w-1/3 flex relative items-center justify-between">
-            <input class="inputAnswer mr-2" type="checkbox" id="1" name="1" value="1">A
-            <input class="inputAnswer mr-2" type="checkbox" id="2" name="2" value="2">B
-            <input class="inputAnswer mr-2" type="checkbox" id="3" name="3" value="3">C
-            <input class="inputAnswer mr-2" type="checkbox" id="4" name="4" value="4">D
-            <input class="inputAnswer mr-2" type="checkbox" id="5" name="5" value="5">E
+            <input class="inputAnswer mr-1" type="checkbox" id="1" name="1" value="1">A
+            <input class="inputAnswer mr-1" type="checkbox" id="2" name="2" value="2">B
+            <input class="inputAnswer mr-1" type="checkbox" id="3" name="3" value="3">C
+            <input class="inputAnswer mr-1" type="checkbox" id="4" name="4" value="4">D
+            <input class="inputAnswer mr-1" type="checkbox" id="5" name="5" value="5">E
           </div>
         </div>
 

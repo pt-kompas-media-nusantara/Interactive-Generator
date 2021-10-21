@@ -10,7 +10,7 @@ new Vue({
             showResult: false,
             showPreview: false,
             questionType: '',
-            choiceNumber: 2,
+            choiceNumber: [],
             cover: {
                 image: '',
                 title: '',
@@ -55,50 +55,39 @@ new Vue({
                     return 'text-center'
                     break;
             }
+        },
+        updateChoiceNumber(){
+            return this.choiceNumber;
         }
     }, 
     methods: {
-        updateAnswerChoice(limit = 1, idx) {
+        inputChoicesNumber(idx) {
+            let number = parseInt(document.getElementsByClassName('inputChoices')[idx].value);
+            if (this.choiceNumber.length == idx) {
+                this.choiceNumber.push(number)
+            } else {
+                this.choiceNumber.splice(idx, 1)
+                this.choiceNumber.push(number)
+            }
+        },
+        updateAnswerChoice(idx) {
+            let choiceNumber = this.choiceNumber[idx];
             let inputCover = document.getElementsByClassName('inputAnswerCover')[idx];
             let inputAnswer = inputCover.querySelectorAll('input.inputAnswer');
-            let choiceCol = document.querySelectorAll('input.inputAnswerChoice');
             for(let i=0; i<inputAnswer.length; i++) {
-                if (i < choiceCol.length) {
+                if (i < choiceNumber) {
                     inputAnswer[i].disabled = false;
                 } else {
                     inputAnswer[i].disabled = true;
                 }
             }
-            
-            // get only checked value
-            // console.log('limit:', limit)
-            // inputAnswer.forEach(e => {
-            //     e.addEventListener('change', () => {
-            //         let count = 0;
-            //         console.log('count: ', count)
-            //         if (count > limit) {
-            //             e.checked = false;
-            //         } else {
-            //             count++;
-            //         }
-            //     })
-            // })
         },
         updateAnswerCount(idx) {
             const limit = document.getElementsByClassName('inputAnswerCount')[idx].value;
             const column = document.getElementsByClassName('answerColumn')[idx];
-            
             column.style.display = 'flex';
-            this.updateAnswerChoice(limit, idx)
+            this.updateAnswerChoice(idx)
             return limit;
-        },
-        addChoiceNumber() {
-            max = 5;
-            return this.choiceNumber <= max ? this.choiceNumber++ : max;
-        },
-        minChoiceNumber() {
-            min = 2;
-            return this.choiceNumber >= min ? this.choiceNumber-- : min;
         },
         updateExpType(idx) {
             // get media column & show it
@@ -330,41 +319,67 @@ new Vue({
 
 
             let data = '',
+                choices= '',
+                answers= '',
                 quizId = this.generateId();
+
+            for (let j=0; j<this.question.length; j++) {
+                this.question[j].choices.forEach(e => {
+                    choices += `{'id': ${e.id},'text': ${e.text}}, `
+                })
+            }
+
+            console.log(this.choices);
+
+            for (let l=0; l<this.question.length; l++) {
+                console.log(this.question[l].answer);
+                answers += `{
+                    'correct': (${this.question[l].answer.correct}),
+                    'header': {
+                        'type': '${this.question[l].answer.header.type}',
+                        'url': '${this.question[l].answer.header.url ? this.question[l].answer.header.url : null}',
+                    },
+                    'text': ${this.question[l].answer.text}
+                }`
+            }
 
             // data sesuai pertanyaan
             // let inputQuestion = document.getElementsByClassName('inputQuestion');
             for (let i=0; i<this.question.length; i++) {
-                data += `${this.question[i]}`
+                // console.log(this.question[i]);
+                data += `
+                    'question': {
+                        'type': '${this.question[i].type}',
+                        'url': '${this.question[i].url ? this.question[i].url : null}',
+                        'text': '${this.question[i].text}'
+                    },
+                    'choices': (${choices}),
+                    'choicecount': ${this.question[i].choicecount},
+                    'answer': ${answers}
+                `
             }
 
-            console.log(`
-                data=({
-                    ${data}
-                })
-            `)
+            
             
             const shortcode = 
             `[InteractiveQuiz 
                 id='${quizId}' 
-                cover= {
+                cover= "{
                     'title': '${this.cover.title}', 
                     'excerpt': '${this.cover.excerpt}', 
                     'thumbnail': '${this.cover.image}', 
                     'button': '${this.cover.button}'
-                },
-                data=({
-                    
-                })
-            /]`;
+                }",
+                data= "({
+                    ${data}
+                })"
 
-            
-            // data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" 
-            // /]`
+            /]`
+
+
+            // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" data="({'question': {'type':'audio', 'url':'kompas.jpg', 'text': 'Apa makna gambar dibawah?'},'choices': ({'id': 1, 'text': 'Pilihan A'}, {'id': 2, 'text': 'Pilihan B'}, {'id': 3, 'text': 'Pilihan C'}),'choicecount': 1,'answer': {'correct': (1), 'header':{'type':'image', 'url':'kompas.jpg'}, 'text': 'Sumatera selatan memiliki banyak kota di Indonesia'}})" /]
 
 			this.$refs.inputResult.value = shortcode;
         }
-    },
-    mounted() {
     }
 })
