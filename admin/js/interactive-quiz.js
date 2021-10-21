@@ -141,8 +141,36 @@ new Vue({
             }
         },
         addForm(idx) {
-            this.getInput();
+            this.getInput(idx);
 			this.quiz.push({ value: '' });
+
+            // remove column after add form
+            const addForm = document.getElementsByClassName('addColumn')[idx];
+            addForm.style.display = 'none'
+		},
+        showColBefore(idx) {
+            const form = document.getElementsByClassName('addColumn')[idx-1];
+            form.style.display = 'flex'
+            console.log(form)
+        },
+		getInput(idx = 0){
+			this.valUrl = []
+			this.valCredit = []
+			this.valTitle = []
+			this.valText = []
+			this.valInputButton = []
+            this.valInputButtonLabel = []
+            this.valTypeQuiz = []
+            this.valQuestion = []
+            this.valAnswerChoice = []
+            this.valRightChoice = []
+            this.valQuestionImage = []
+            this.valQuestionAudio = []
+            this.valExpAudio = []
+            this.valExpImage = []
+            this.valExplanation = []
+            
+            // every time addform clicked, add input form before to array 
             const type = document.getElementsByClassName('inputQuizType')[idx].value;
             let media;
             if (type == 'image') {
@@ -197,33 +225,6 @@ new Vue({
                     'text': explanation
                 }
             })
-
-            // remove column after add form
-            const addForm = document.getElementsByClassName('addColumn')[idx];
-            addForm.style.display = 'none'
-		},
-        showColBefore(idx) {
-            const form = document.getElementsByClassName('addColumn')[idx-1];
-            form.style.display = 'flex'
-            console.log(form)
-        },
-		getInput(){
-			this.valUrl = []
-			this.valCredit = []
-			this.valTitle = []
-			this.valText = []
-			this.valInputButton = []
-            this.valInputButtonLabel = []
-            this.valTypeQuiz = []
-            this.valQuestion = []
-            this.valAnswerChoice = []
-            this.valRightChoice = []
-            this.valQuestionImage = []
-            this.valQuestionAudio = []
-            this.valExpAudio = []
-            this.valExpImage = []
-            this.valExplanation = []
-            
 		},
         expMediaGallery(idx) {
             const self = this;
@@ -327,15 +328,21 @@ new Vue({
             this.getInput();
             self.showResult = true;
 
+
             let data = '',
-                choices = '',
                 quizId = this.generateId();
 
             // data sesuai pertanyaan
-            let question = document.getElementsByClassName('inputQuestion');
-            for (let i=0; i<question.length; i++) {
-                data += this.question[i]
+            // let inputQuestion = document.getElementsByClassName('inputQuestion');
+            for (let i=0; i<this.question.length; i++) {
+                data += `${this.question[i]}`
             }
+
+            console.log(`
+                data=({
+                    ${data}
+                })
+            `)
             
             const shortcode = 
             `[InteractiveQuiz 
@@ -344,7 +351,11 @@ new Vue({
                     'title': '${this.cover.title}', 
                     'excerpt': '${this.cover.excerpt}', 
                     'thumbnail': '${this.cover.image}', 
-                    'button': '${this.cover.button}'} 
+                    'button': '${this.cover.button}'
+                },
+                data=({
+                    
+                })
             /]`;
 
             
