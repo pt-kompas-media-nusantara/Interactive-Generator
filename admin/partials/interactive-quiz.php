@@ -202,7 +202,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <input class="inputQuestion md:w-11/12" type="text" name="inputQuestion" placeholder="tuliskan pertanyaan disini">
+            <input class="inputQuestion md:w-11/12 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="inputQuestion" placeholder="tuliskan pertanyaan disini">
           </div>
         </div>
 
@@ -226,7 +226,7 @@ wp_enqueue_media();
           <div class="md:w-1/4 flex justify-end items-center"></div>
           <div class="choiceCols md:w-3/4 flex flex-col relative justify-start">
             <input v-for="(item, index) in choiceNumber[key]" :key="index" placeholder="choice .."
-              class="inputAnswerChoice mb-2 md:w-11/12" type="text">
+              class="inputAnswerChoice mb-2 md:w-11/12 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text">
           </div>
         </div>
 

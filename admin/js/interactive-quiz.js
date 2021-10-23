@@ -286,7 +286,7 @@ new Vue({
                     'text': explanation
                 }
             })
-		},
+        },
         generateShortcode() {
             const self = this;
 
@@ -301,16 +301,9 @@ new Vue({
                 quizId = this.generateId();
 
             // loop array pertanyaan
-            
             for (let i=0; i<this.question.length; i++) {
-                // console.log(this.question[i], ' i:',i)
-                // console.log(this.question[i].choices);
-                // for (let j=0; j<this.question[i].choices.length; j++) {
-                //   console.log(this.question[i].choices, ' choices ');
-                // }
                 choices = '';
                 this.question[i].choices.forEach(e => {
-                  console.log('i: ' + i);
                   choices += `
                   {
                       'id': ${e.id},
@@ -371,6 +364,6 @@ new Vue({
             // /]
 
 			this.$refs.inputResult.value = shortcode;
-        }
+      }
     }
 })
