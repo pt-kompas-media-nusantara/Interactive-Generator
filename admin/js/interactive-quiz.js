@@ -304,8 +304,7 @@ new Vue({
             for (let i=0; i<this.question.length; i++) {
                 choices = '';
                 this.question[i].choices.forEach(e => {
-                  choices += `
-                  {
+                  choices += `{
                       'id': ${e.id},
                       'text': ${e.text}
                   },`
@@ -320,15 +319,17 @@ new Vue({
                     'text': ${this.question[i].answer.text}
                 }`
                 data += `
-                'question': {
-                    'type': '${this.question[i].type}',
-                    'url': '${this.question[i].url ? this.question[i].url : null}',
-                    'text': '${this.question[i].text}'
-                },
-                'choices': (${choices}),
-                'choicecount': ${this.question[i].choicecount},
-                'answer': ${answers},
-                `
+                {
+                    'question': {
+                        'type': '${this.question[i].type}',
+                        'url': '${this.question[i].url ? this.question[i].url : null}',
+                        'text': '${this.question[i].text}'
+                    },
+                    'choices': (${choices}),
+                    'choicecount': ${this.question[i].choicecount},
+                    'answer': ${answers},
+                },`
+                console.log(data, 'DATA')
             }
 
             data = data.replace(/.$/, "");
@@ -336,7 +337,7 @@ new Vue({
             
             const shortcode = 
             `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
-            data="({${data}})," 
+            data="(${data})," 
             /]`
 
             // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" 
