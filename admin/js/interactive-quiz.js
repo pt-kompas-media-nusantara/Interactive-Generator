@@ -221,7 +221,8 @@ new Vue({
         },
         // add new empty form for question
         addForm(idx) {
-            // this.getInput(idx);
+            console.log('index added: ', idx)
+            this.getInput(idx);
             this.quiz.push({ value: '' });
             // remove column after add form
             const addForm = document.getElementsByClassName('addColumn')[idx];
@@ -288,9 +289,11 @@ new Vue({
 		},
         generateShortcode() {
             const self = this;
-            // if question length only 1 == first question, get input if > 1 get from state question array
-            // let questionNumber = document.getElementsByClassName('inputQuestion').length;
-            // questionNumber === 1 ? this.getInput() : this.getInput(questionNumber);
+
+            // add last question to array
+            let last = document.getElementsByClassName('inputQuestion').length;
+            this.getInput(last-1);
+
             self.showResult = true;
             let data = '',
                 choices= '',
@@ -302,13 +305,13 @@ new Vue({
             for (let i=0; i<this.question.length; i++) {
                 // console.log(this.question[i], ' i:',i)
                 this.question[i].choices.forEach(e => {
-                    choices += `
+                    choices = `
                     {
                         'id': ${e.id},
                         'text': ${e.text}
                     },`
                 })
-                answers += `{
+                answers = `{
                     'correct': (${this.question[i].answer.correct}),
                     'header': {
                         'type': '${this.question[i].answer.header.type}',
