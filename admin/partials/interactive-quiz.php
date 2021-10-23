@@ -202,7 +202,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <input class="inputQuestion md:w-4/5" type="text" name="inputQuestion" placeholder="tuliskan pertanyaan disini">
+            <input class="inputQuestion md:w-11/12" type="text" name="inputQuestion" placeholder="tuliskan pertanyaan disini">
           </div>
         </div>
 
@@ -214,7 +214,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex flex-col relative justify-start">
-            <select @click="inputChoicesNumber(key)"
+            <select @click="inputChoicesNumber(key)" @change="inputChoicesNumber(key)"
               class="inputChoices md:w-1/6 flex relative" name="inputChoices">
               <option v-for="item in 5" :key="item" :value="item" v-if="item >= 2">{{ item }}</option>
             </select>
@@ -225,8 +225,8 @@ wp_enqueue_media();
         <div class="w-full relative flex">
           <div class="md:w-1/4 flex justify-end items-center"></div>
           <div class="choiceCols md:w-3/4 flex flex-col relative justify-start">
-            <input v-for="(item, index) in choiceNumber[key]"  :key="index"
-              class="inputAnswerChoice mb-2 md:w-full" type="text">
+            <input v-for="(item, index) in choiceNumber[key]" :key="index" placeholder="choice .."
+              class="inputAnswerChoice mb-2 md:w-11/12" type="text">
           </div>
         </div>
 
@@ -238,7 +238,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <select @click="updateAnswerCount(key)"
+            <select @click="updateAnswerCount(key)" @change="updateAnswerCount(key)"
               class="inputAnswerCount md:w-1/6 flex relative items-center" name="inputAnswerCount">
               <option v-for="(item, id) in choiceNumber[key]" :key="id" :value="id+1">{{ id + 1 }}</option>
             </select>
