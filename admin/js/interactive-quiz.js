@@ -227,7 +227,7 @@ new Vue({
             // remove column after add form
             const addForm = document.getElementsByClassName('addColumn')[idx];
             addForm.style.display = 'none'
-		},
+		    },
         getInput(idx=0){
             console.log(this.question, ' idx:'+idx)
             
@@ -304,13 +304,20 @@ new Vue({
             
             for (let i=0; i<this.question.length; i++) {
                 // console.log(this.question[i], ' i:',i)
+                // console.log(this.question[i].choices);
+                // for (let j=0; j<this.question[i].choices.length; j++) {
+                //   console.log(this.question[i].choices, ' choices ');
+                // }
+                choices = '';
                 this.question[i].choices.forEach(e => {
-                    choices = `
-                    {
-                        'id': ${e.id},
-                        'text': ${e.text}
-                    },`
+                  console.log('i: ' + i);
+                  choices += `
+                  {
+                      'id': ${e.id},
+                      'text': ${e.text}
+                  },`
                 })
+                choices = choices.replace(/.$/, "");
                 answers = `{
                     'correct': (${this.question[i].answer.correct}),
                     'header': {
@@ -325,15 +332,14 @@ new Vue({
                     'url': '${this.question[i].url ? this.question[i].url : null}',
                     'text': '${this.question[i].text}'
                 },
-                'choicecount': ${this.question[i].choicecount},
                 'choices': (${choices}),
-                'answer': ${answers}
+                'choicecount': ${this.question[i].choicecount},
+                'answer': ${answers},
                 `
-                // console.log(data)
-                // console.log('i: 2' + i, ' ' + this.question[2].text)
             }
 
-            choices = choices.replace(/.$/, "");
+            data = data.replace(/.$/, "");
+
             
             const shortcode = 
             `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
