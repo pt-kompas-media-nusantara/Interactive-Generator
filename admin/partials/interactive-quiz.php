@@ -144,7 +144,7 @@ wp_enqueue_media();
 
   <!-- KUIS BLOCK -->  
   <div v-for="(item, key) in quiz" :key="key" class="flex mt-4" :class="updateQuizId">
-    <section class="input_block w-full flex-1 mr-2">
+    <section class="input_block w-full flex-1 mr-2 question_block">
       <div class="w-full relative flex flex-col" style="background: #acf">
         <!-- Type -->
         <div class="w-full relative flex mt-2">

@@ -221,88 +221,92 @@ new Vue({
         },
         // add new empty form for question
         addForm(idx) {
-            console.log('index added: ', idx)
-            this.getInput(idx);
             this.quiz.push({ value: '' });
             // remove column after add form
             const addForm = document.getElementsByClassName('addColumn')[idx];
             addForm.style.display = 'none'
-		    },
-        getInput(idx=0){
-            console.log(this.question, ' idx:'+idx)
-            
-            // every time addform clicked, add input form before to array 
-            const type = document.getElementsByClassName('inputQuizType')[idx].value;
-            let media; // media for question
-            if (type == 'image') {
-                media = document.getElementsByClassName('inputMediaImage')[idx].value;
-            } else if (type == 'audio') {
-                media = document.getElementsByClassName('inputMediaAudio')[idx].value;
-            } else {
-                media = ''
+        },
+        getInput(){
+            const questionLength = document.getElementsByClassName('question_block').length;
+            if (questionLength == this.question.length) {
+                return;
             }
-            const question = document.getElementsByClassName('inputQuestion')[idx].value;
-            const choices = document.getElementsByClassName('choiceCols')[idx].childNodes;
-            const rightChoiceNumber = document.getElementsByClassName('inputAnswerCount')[idx].value;
-            const inputAnswer = document.getElementsByClassName('inputAnswerCover')[idx];
-            let input = inputAnswer.querySelectorAll('input.inputAnswer:checked');
-            let jawaban = []
-            input.forEach(e => {
-                jawaban.push(e.value)
-            });
-
-            let choiceBox = []
-            choices.forEach((e, idx) => {
-                choiceBox.push({
-                    'id': idx+1,
-                    'text': e.value
-                })
-            });
-
-            // explanation value
-            let expType = document.getElementsByClassName('inputExpType')[idx].value;
-            let explanation = document.getElementsByClassName('inputExplanation')[idx].value;
-            let expUrl;
-            if (expType == 'image') {
-                expUrl = document.getElementsByClassName('inputExpImage')[idx].value;
-            } else if (expType == 'audio') {
-                expUrl = document.getElementsByClassName('inputExpAudio')[idx].value;
-            } else {
-                expUrl = ''
-            }
-            
-            this.question.push({
-                'type': type,
-                'url': media,
-                'text': question,
-                'choices': choiceBox,
-                'choicecount': rightChoiceNumber,
-                'answer': {
-                    'correct': jawaban,
-                    'header': {
-                        'type': expType,
-                        'url': expUrl
-                    },
-                    'text': explanation
+            console.log(questionLength, 'length now')
+            console.log(this.question.length, 'question')
+            for (let i = 0; i < questionLength; i++) {
+                let type, media, question, choices, rightChoiceNumber, inputAnswer, input, jawaban, choiceBox, expType, explanation, expUrl;
+                type = document.getElementsByClassName('inputQuizType')[i].value;
+                media; // media for question
+                if (type == 'image') {
+                    media = document.getElementsByClassName('inputMediaImage')[i].value;
+                } else if (type == 'audio') {
+                    media = document.getElementsByClassName('inputMediaAudio')[i].value;
+                } else {
+                    media = ''
                 }
-            })
+                question = document.getElementsByClassName('inputQuestion')[i].value;
+                choices = document.getElementsByClassName('choiceCols')[i].childNodes;
+                rightChoiceNumber = document.getElementsByClassName('inputAnswerCount')[i].value;
+                inputAnswer = document.getElementsByClassName('inputAnswerCover')[i];
+                input = inputAnswer.querySelectorAll('input.inputAnswer:checked');
+                jawaban = []
+                input.forEach(e => {
+                    jawaban.push(e.value)
+                });
+
+                choiceBox = []
+                choices.forEach((e, idx) => {
+                    choiceBox.push({
+                        'id': idx+1,
+                        'text': e.value
+                    })
+                });
+
+                // explanation value
+                expType = document.getElementsByClassName('inputExpType')[i].value;
+                explanation = document.getElementsByClassName('inputExplanation')[i].value;
+                expUrl;
+                if (expType == 'image') {
+                    expUrl = document.getElementsByClassName('inputExpImage')[i].value;
+                } else if (expType == 'audio') {
+                    expUrl = document.getElementsByClassName('inputExpAudio')[i].value;
+                } else {
+                    expUrl = ''
+                }
+
+                console.log(question, 'question')
+                console.log(explanation, 'exp')
+                
+                this.question.push({
+                    'type': type,
+                    'url': media,
+                    'text': question,
+                    'choices': choiceBox,
+                    'choicecount': rightChoiceNumber,
+                    'answer': {
+                        'correct': jawaban,
+                        'header': {
+                            'type': expType,
+                            'url': expUrl
+                        },
+                        'text': explanation
+                    }
+                })
+                
+            }
         },
         generateShortcode() {
             const self = this;
-
             // add last question to array
-            let last = document.getElementsByClassName('inputQuestion').length;
-            this.getInput(last-1);
-
-            if (this.question.length, ' length')
+            self.getInput();
 
             self.showResult = true;
             let data = '',
                 choices= '',
                 answers= '',
-                quizId = this.generateId();
+                quizId = this.generateId();            
 
-            // loop array pertanyaan
+            // loop sesuai jumlah array pertanyaan
             for (let i=0; i<this.question.length; i++) {
                 choices = '';
                 this.question[i].choices.forEach(e => {
@@ -324,6 +328,9 @@ new Vue({
             `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
             data="(${data})" 
             /]`
+
+            // reset array to zero!
+            this.question = [];
 
             // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" 
             // data="({
@@ -350,6 +357,6 @@ new Vue({
             // /]
 
 			this.$refs.inputResult.value = shortcode;
-      }
+        }
     }
 })
