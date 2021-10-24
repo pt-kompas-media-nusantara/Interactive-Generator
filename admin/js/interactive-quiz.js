@@ -294,6 +294,8 @@ new Vue({
             let last = document.getElementsByClassName('inputQuestion').length;
             this.getInput(last-1);
 
+            if (this.question.length, ' length')
+
             self.showResult = true;
             let data = '',
                 choices= '',
@@ -304,40 +306,23 @@ new Vue({
             for (let i=0; i<this.question.length; i++) {
                 choices = '';
                 this.question[i].choices.forEach(e => {
-                  choices += `{
-                      'id': ${e.id},
-                      'text': ${e.text}
-                  },`
+                  choices += `{'id': ${e.id},'text': '${e.text}'},`
                 })
                 choices = choices.replace(/.$/, "");
-                answers = `{
-                    'correct': (${this.question[i].answer.correct}),
-                    'header': {
-                        'type': '${this.question[i].answer.header.type}',
-                        'url': '${this.question[i].answer.header.url ? this.question[i].answer.header.url:null}',
-                    },
-                    'text': ${this.question[i].answer.text}
-                }`
+                answers = `{'correct': (${this.question[i].answer.correct}),'header': {'type': '${this.question[i].answer.header.type}','url': '${this.question[i].answer.header.url ? this.question[i].answer.header.url:null}'},'text': '${this.question[i].answer.text}'}`
                 data += `
                 {
-                    'question': {
-                        'type': '${this.question[i].type}',
-                        'url': '${this.question[i].url ? this.question[i].url : null}',
-                        'text': '${this.question[i].text}'
-                    },
+                    'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},
                     'choices': (${choices}),
                     'choicecount': ${this.question[i].choicecount},
-                    'answer': ${answers},
+                    'answer': ${answers}
                 },`
-                console.log(data, 'DATA')
             }
-
             data = data.replace(/.$/, "");
-
             
             const shortcode = 
             `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
-            data="(${data})," 
+            data="(${data})" 
             /]`
 
             // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" 
