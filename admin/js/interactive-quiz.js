@@ -10,12 +10,19 @@ new Vue({
             showResult: false,
             showPreview: false,
             questionType: '',
+            isExternalAdded: 0,
             choiceNumber: [],
             cover: {
                 image: '',
                 title: '',
                 excerpt: '',
                 button: ''
+            },
+            external: {
+                title: '',
+                excerpt: '',
+                button: '',
+                url: ''
             },
             quiz: [{ value: '' }],
             question: []
@@ -283,12 +290,12 @@ new Vue({
                 })
                 choices = choices.replace(/.$/, "");
                 answers = `{'correct': (${this.question[i].answer.correct}),'header': {'type': '${this.question[i].answer.header.type}','url': '${this.question[i].answer.header.url ? this.question[i].answer.header.url:null}'},'text': '${this.question[i].answer.text}'}`
-                data += `{'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},'choices': (${choices}),'choicecount': ${this.question[i].choicecount},'answer': ${answers}},`
+                data += `{'id': ${i+1}, 'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},'choices': (${choices}),'choicecount': ${this.question[i].choicecount},'answer': ${answers}},`
             }
             data = data.replace(/.$/, "");
             
             const shortcode = 
-            `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", data="(${data})" /]`
+            `[InteractiveQuiz id='${quizId}' cover="{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}" data="(${data})" external="{ 'title': '${this.external.title}', 'excerpt': '${this.external.excerpt}', 'button': '${this.external.button}', 'url': '${this.external.url}'}" /]`
 
             // reset array to zero!
             this.question = [];

@@ -18,6 +18,7 @@ wp_enqueue_media();
 <div class="mt-8">
   <p class="block text-gray-800 mb-4 font-bold">Catatan:</p>
   <p class="block text-gray-800 mb-4">- Setiap input dengan tanda <sup class="text-red-600 font-bold text-sm">*</sup> wajib diisi. sisanya boleh dikosongkan.</p>
+  <p class="block text-gray-800 mb-4">- Setiap input tidak boleh berisikan karakter berikut <sup class="text-red-600 font-bold text-sm">( ' ', [] )</sup> untuk kebutuhan petik gunakan <sup class="text-gray-800 font-bold text-sm">("")</sup></p>
 </div>
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <section class="quizGenerator flex flex-col mt-10 w-full max-w-8xl" id="quiz">
@@ -43,7 +44,7 @@ wp_enqueue_media();
                 <input 
                   v-model="cover.title"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
-                  type="text" maxlength="120"
+                  type="text"
                   name="view" required 
                   placeholder="Wajib diisi" ref="coverTitle">
               </div>
@@ -62,7 +63,7 @@ wp_enqueue_media();
                 <input 
                   v-model="cover.excerpt"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
-                  type="text" maxlength="120"
+                  type="text"
                   name="view" required 
                   placeholder="Excerpt untuk cover" ref="coverExcerpt">
               </div>
@@ -103,7 +104,7 @@ wp_enqueue_media();
                 <input 
                   v-model="cover.button"
                   class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
-                  type="text" maxlength="20"
+                  type="text"
                   name="view" required
                   placeholder="Text Button">
               </div>
@@ -142,8 +143,103 @@ wp_enqueue_media();
     </section>
   </div>
 
+  <!-- EXTERNAL SECTION -->
+  <h2 class="font-bold text-2xl leading-normal mb-2">Survey Form</h2>
+  <div class="flex mb-4">
+    <input class="externalInput" type="checkbox" name="externalInput" value="0" v-model="isExternalAdded"><label class="block mr-4 leading-none" style="margin-top: -4px;" for="externalInput">Tambahkan survey form</label>
+  </div>
+  <div class="flex mb-6" v-if="isExternalAdded">
+    <!-- Input Cover -->
+    <section class="input_block w-full flex-1 mr-2">
+      <div class="w-full">
+  
+        <!-- cover -->
+        <div class="md:flex md:flex-col md:items-center mb-3 p-6 rounded" 
+            style="background: rgb(229 229 229)"  >
+          <!-- Judul -->
+          <div class="md:w-full flex mb-3">
+            <div class="md:w-1/4 flex justify-end">
+              <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Judul <sup class="text-red-600 font-bold text-sm">*</sup>
+              </label>
+            </div>
+            <div class="md:w-3/4 relative">
+              <div class="md:w-full">
+                <input 
+                  v-model="external.title"
+                  class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                  type="text"
+                  name="view" required 
+                  placeholder="Wajib diisi" ref="coverTitle">
+              </div>
+            </div>
+          </div>
+  
+          <!-- Excerpt -->
+          <div class="md:w-full flex mb-3">
+            <div class="md:w-1/4 flex justify-end">
+              <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Excerpt
+              </label>
+            </div>
+            <div class="md:w-3/4 relative">
+              <div class="md:w-full">
+                <input 
+                  v-model="external.excerpt"
+                  class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                  type="text"
+                  name="view" 
+                  placeholder="Excerpt untuk cover" ref="coverExcerpt">
+              </div>
+            </div>
+          </div>
+  
+          <!-- Button Text -->
+          <div class="md:w-full flex mb-3">
+            <div class="md:w-1/4 flex justify-end">
+              <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                Text Button <sup class="text-red-600 font-bold text-sm">*</sup>
+              </label>
+            </div>
+            <div class="md:w-3/4 relative">
+              <div class="md:w-1/3">
+                <input 
+                  v-model="external.button"
+                  class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                  type="text"
+                  name="view" required
+                  placeholder="Text Button">
+              </div>
+            </div>
+          </div>
 
-  <h2 class="font-bold text-2xl leading-normal mb-2">Data Kuis</h2>
+          <!-- URL -->
+          <div class="md:w-full flex mb-3">
+            <div class="md:w-1/4 flex justify-end">
+              <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                URL Button <sup class="text-red-600 font-bold text-sm">*</sup>
+              </label>
+            </div>
+            <div class="md:w-3/4 relative">
+              <div class="md:w-full">
+                <input 
+                  v-model="external.url"
+                  class="inputId bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" 
+                  type="text"
+                  name="view" required
+                  placeholder="Text Button">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Preview Cover -->
+    <section class="preview_block w-full flex-1"></section>
+  </div>
+
+  <h2 class="font-bold text-2xl leading-normal mb-2 mt-8">Data Kuis</h2>
   <!-- KUIS BLOCK -->  
   <div v-for="(item, key) in quiz" :key="key" class="flex mb-4" :class="updateQuizId">
     <section class="input_block w-full flex-1 mr-2 question_block">
@@ -250,7 +346,7 @@ wp_enqueue_media();
         </div>
 
         <!-- Answer -->
-        <div class="answerColumn w-full relative flex hidden">
+        <div class="answerColumn w-full relative flex">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
               Jawaban Benar<sup class="text-red-600 font-bold text-sm">*</sup>
@@ -316,6 +412,41 @@ wp_enqueue_media();
             </div>
           </div>
         </div>
+
+        <!-- External link for explanation 
+        <div class="externalLink w-full relative my-2 flex">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
+              External link
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <input class="externalLinkInput" type="checkbox" name="externalLinkInput" value="0">
+          </div>
+        </div>
+
+        <div class="md:w-full relative my-2 flex items-center">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-600 md:text-right mb-1 md:mb-0 pr-4">
+              External URI
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <input class="ExternalLinkURI bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="url" name="url" placeholder="External link">
+          </div>
+        </div>
+
+        <div class="md:w-full relative my-2 flex items-center">
+          <div class="md:w-1/4 flex justify-end">
+            <label class="block text-gray-600 md:text-right mb-1 md:mb-0 pr-4">
+              External URI - Text
+            </label>
+          </div>
+          <div class="md:w-3/4 relative">
+            <input class="ExternalLinkInputText bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="externalLinkText" placeholder="External link text">
+          </div>
+        </div>-->
+        
         <!-- Exp Textarea -->
         <div class="w-full relative flex mb-3">
           <div class="md:w-1/4 flex justify-end">
@@ -324,7 +455,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex">
-            <textarea class="inputExplanation p-2" name="inputExp" rows="4" cols="75" placeholder="Masukkan penjelasan disini" maxlength="200"></textarea>
+            <textarea class="inputExplanation p-2" name="inputExp" rows="4" cols="75" placeholder="Masukkan penjelasan disini"></textarea>
           </div>
         </div>
       </div>
@@ -368,6 +499,7 @@ wp_enqueue_media();
         </div>
         <div class="w-full flex justify-center">
           <div v-if="cover.buttonText"
+
             class="text-white font-bold py-2 px-4 rounded inline-flex items-center" style="width:auto; background: #50A718">
             <p class="text-center">{{ cover.buttonText }}</p>
           </div>
