@@ -30,25 +30,6 @@ new Vue({
         },
         updateQuizId() {
             this.id = this.generateId();
-        },
-        selectedVideo() {
-            return this.videoSource;
-        },
-        alignTextResult() {
-            switch (this.alignText) {
-                case 'right':
-                    return 'text-right'
-                    break;
-                case 'left':
-                    return 'text-left'
-                    break;
-                default:
-                    return 'text-center'
-                    break;
-            }
-        },
-        updateChoiceNumber(){
-            return this.choiceNumber;
         }
     }, 
     methods: {
@@ -192,12 +173,8 @@ new Vue({
 				document.getElementsByClassName('gallery-img-picked')[0].src = attachment.url;
 				document.getElementsByClassName('inputCoverImage')[0].value = attachment.url;
                 self.cover.image = attachment.url;
-                // document.getElementsByClassName('close_media')[0].style.display = 'block'
-                // document.getElementsByClassName('upload_image_button')[0].style.display = 'none'
 			});
-            // this.cover.thumbnail = document.getElementsByClassName('inputCoverImage')[0].value;
 			file_frame.open();
-            // console.log(document.getElementsByClassName('inputCoverImage')[0].value, 'src')
 
 		}, 
         removeCoverImage() {
@@ -228,11 +205,6 @@ new Vue({
         },
         getInput(){
             const questionLength = document.getElementsByClassName('question_block').length;
-            if (questionLength == this.question.length) {
-                return;
-            }
-            console.log(questionLength, 'length now')
-            console.log(this.question.length, 'question')
             for (let i = 0; i < questionLength; i++) {
                 let type, media, question, choices, rightChoiceNumber, inputAnswer, input, jawaban, choiceBox, expType, explanation, expUrl;
                 type = document.getElementsByClassName('inputQuizType')[i].value;
@@ -273,9 +245,6 @@ new Vue({
                 } else {
                     expUrl = ''
                 }
-
-                console.log(question, 'question')
-                console.log(explanation, 'exp')
                 
                 this.question.push({
                     'type': type,
@@ -314,48 +283,16 @@ new Vue({
                 })
                 choices = choices.replace(/.$/, "");
                 answers = `{'correct': (${this.question[i].answer.correct}),'header': {'type': '${this.question[i].answer.header.type}','url': '${this.question[i].answer.header.url ? this.question[i].answer.header.url:null}'},'text': '${this.question[i].answer.text}'}`
-                data += `
-                {
-                    'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},
-                    'choices': (${choices}),
-                    'choicecount': ${this.question[i].choicecount},
-                    'answer': ${answers}
-                },`
+                data += `{'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},'choices': (${choices}),'choicecount': ${this.question[i].choicecount},'answer': ${answers}},`
             }
             data = data.replace(/.$/, "");
             
             const shortcode = 
-            `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
-            data="(${data})" 
-            /]`
+            `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", data="(${data})" /]`
 
             // reset array to zero!
             this.question = [];
-
-            // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" 
-            // data="({
-            //     'question': {
-            //         'type':'audio', 
-            //         'url':'kompas.jpg', 
-            //         'text': 'Apa makna gambar dibawah?'
-            //     },
-            //     'choices': (
-            //         {'id': 1, 'text': 'Pilihan A'}, 
-            //         {'id': 2, 'text': 'Pilihan B'}, 
-            //         {'id': 3, 'text': 'Pilihan C'}
-            //         ),
-            //     'choicecount': 1,
-            //     'answer': {
-            //         'correct': (1), 
-            //         'header':{
-            //             'type':'image', 
-            //             'url':'kompas.jpg'
-            //         }, 
-            //         'text': 'Sumatera selatan memiliki banyak kota di Indonesia'
-            //     }
-            // })" 
-            // /]
-
+            // put shortcode to 
 			this.$refs.inputResult.value = shortcode;
         }
     }

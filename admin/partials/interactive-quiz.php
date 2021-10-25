@@ -33,7 +33,7 @@ wp_enqueue_media();
             style="background: rgb(229 229 229)"  >
           <!-- Judul -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
                 Judul <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
@@ -52,9 +52,9 @@ wp_enqueue_media();
   
           <!-- Excerpt -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                Excerpt
+                Excerpt <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
             </div>
             <div class="md:w-3/4 relative">
@@ -71,13 +71,13 @@ wp_enqueue_media();
   
           <!-- Thumbnail  -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                Url Foto
+                Url Foto<sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
             </div>
             <div class="md:w-3/4 relative">
-              <div class="md:w-5/6">
+              <div class="md:w-full">
                 <input 
                   class="inputCoverImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="text" name="thumbnailUrl" placeholder="pilih gambar untuk cover">
 
@@ -93,7 +93,7 @@ wp_enqueue_media();
   
           <!-- Button Text -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
                 Button <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
