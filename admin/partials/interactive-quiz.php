@@ -32,7 +32,7 @@ wp_enqueue_media();
             style="background: #acf"  >
           <!-- Judul -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
                 Judul <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
@@ -51,9 +51,9 @@ wp_enqueue_media();
   
           <!-- Excerpt -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                Excerpt
+                Excerpt <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
             </div>
             <div class="md:w-3/4 relative">
@@ -70,13 +70,13 @@ wp_enqueue_media();
   
           <!-- Thumbnail  -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
-                Thumbnail
+                Thumbnail <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
             </div>
             <div class="md:w-3/4 relative">
-              <div class="md:w-5/6">
+              <div class="md:w-full">
                 <input 
                   class="inputCoverImage bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 mb-3" type="text" name="thumbnailUrl" placeholder="pilih gambar untuk cover">
 
@@ -92,7 +92,7 @@ wp_enqueue_media();
   
           <!-- Button Text -->
           <div class="md:w-full flex mb-3">
-            <div class="md:1/4">
+            <div class="md:w-1/4 flex justify-end">
               <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4">
                 Button <sup class="text-red-600 font-bold text-sm">*</sup>
               </label>
@@ -202,7 +202,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
-            <input class="inputQuestion md:w-11/12 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="inputQuestion" placeholder="tuliskan pertanyaan disini">
+            <input class="inputQuestion md:w-11/12 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" name="inputQuestion" placeholder="question ...">
           </div>
         </div>
 
@@ -321,7 +321,7 @@ wp_enqueue_media();
             </label>
           </div>
           <div class="md:w-3/4 flex">
-            <textarea class="inputExplanation" name="inputExp" rows="4" cols="75" placeholder="penjelasan disini" maxlength="200"></textarea>
+            <textarea class="inputExplanation" name="inputExp" rows="4" cols="67" placeholder="explanation ..." maxlength="200"></textarea>
           </div>
         </div>
       </div>
