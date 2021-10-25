@@ -314,48 +314,16 @@ new Vue({
                 })
                 choices = choices.replace(/.$/, "");
                 answers = `{'correct': (${this.question[i].answer.correct}),'header': {'type': '${this.question[i].answer.header.type}','url': '${this.question[i].answer.header.url ? this.question[i].answer.header.url:null}'},'text': '${this.question[i].answer.text}'}`
-                data += `
-                {
-                    'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},
-                    'choices': (${choices}),
-                    'choicecount': ${this.question[i].choicecount},
-                    'answer': ${answers}
-                },`
+                data += `{'question': {'type': '${this.question[i].type}','url': '${this.question[i].url ? this.question[i].url : null}','text': '${this.question[i].text}'},'choices': (${choices}),'choicecount': ${this.question[i].choicecount},'answer': ${answers}},`
             }
             data = data.replace(/.$/, "");
             
             const shortcode = 
-            `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", 
-            data="(${data})" 
-            /]`
+            `[InteractiveQuiz id='${quizId}' cover= "{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}", data="(${data})" /]`
 
             // reset array to zero!
             this.question = [];
-
-            // [InteractiveQuiz id="111021132801" cover= "{ 'title': 'Kuis Kemeredekaan', 'excerpt': 'Memasuki masa kemerdekaan, kereta berperan penting “menyelamatkan” para pemimpin bangsa yang menghindar dari?', 'thumbnail': 'kompas.jpg', 'button': 'Yuk Main'}" 
-            // data="({
-            //     'question': {
-            //         'type':'audio', 
-            //         'url':'kompas.jpg', 
-            //         'text': 'Apa makna gambar dibawah?'
-            //     },
-            //     'choices': (
-            //         {'id': 1, 'text': 'Pilihan A'}, 
-            //         {'id': 2, 'text': 'Pilihan B'}, 
-            //         {'id': 3, 'text': 'Pilihan C'}
-            //         ),
-            //     'choicecount': 1,
-            //     'answer': {
-            //         'correct': (1), 
-            //         'header':{
-            //             'type':'image', 
-            //             'url':'kompas.jpg'
-            //         }, 
-            //         'text': 'Sumatera selatan memiliki banyak kota di Indonesia'
-            //     }
-            // })" 
-            // /]
-
+            // put shortcode to 
 			this.$refs.inputResult.value = shortcode;
         }
     }
