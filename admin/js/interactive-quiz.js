@@ -48,6 +48,7 @@ new Vue({
                 this.choiceNumber.splice(idx, 1)
                 this.choiceNumber.push(number)
             }
+            this.updateAnswerChoice(idx);
         },
         updateAnswerChoice(idx) {
             let choiceNumber = this.choiceNumber[idx];
