@@ -104,6 +104,7 @@ class Interactive_Generator_Admin {
 			wp_enqueue_script( 'interactive_subtitle', plugin_dir_url( __FILE__ ) . 'js/interactive-subtitle.js', ['vue'], $this->version, true );
 			wp_enqueue_script( 'interactive_jumbotron', plugin_dir_url( __FILE__ ) . 'js/interactive-jumbotron.js', ['vue'], $this->version, true );
 			wp_enqueue_script( 'interactive_gallery', plugin_dir_url( __FILE__ ) . 'js/interactive-gallery.js', ['vue'], $this->version, true );
+			wp_enqueue_script( 'interactive_quiz', plugin_dir_url( __FILE__ ) . 'js/interactive-quiz.js', ['vue'], $this->version, true );
 			
 			wp_enqueue_script( $this->interactive_generator, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
 		endif;
@@ -120,6 +121,7 @@ class Interactive_Generator_Admin {
   		add_submenu_page( 'interactive-generator', 'Highcharts - Pie', 'Highcharts - Pie', 'edit_posts', 'highcharts-pie-generator', [$this, 'highcharts_pie_generator']);
 		add_submenu_page( 'interactive-generator', 'Subtitle', 'Subtitle', 'edit_posts', 'subtitle-generator', [$this, 'subtitle_generator']);
 		add_submenu_page( 'interactive-generator', 'Jumbotron', 'Jumbotron', 'edit_posts', 'jumbotron-generator', [$this, 'jumbotron_generator']);
+		add_submenu_page( 'interactive-generator', 'Quiz', 'Quiz', 'edit_posts', 'quiz-generator', [$this, 'quiz_generator']);
 	}
 	public function interactive_generator(){
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-index.php';
@@ -147,5 +149,8 @@ class Interactive_Generator_Admin {
 	}
 	public function jumbotron_generator() {
 		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-jumbotron.php';
+	}
+	public function quiz_generator() {
+		include_once plugin_dir_path( __FILE__ ) . '/partials/interactive-quiz.php';
 	}
 }
