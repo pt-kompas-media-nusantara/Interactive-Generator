@@ -48,6 +48,7 @@ new Vue({
                 this.choiceNumber.splice(idx, 1)
                 this.choiceNumber.push(number)
             }
+            this.updateAnswerCount(idx)
         },
         updateAnswerChoice(idx) {
             let choiceNumber = this.choiceNumber[idx];
@@ -209,6 +210,10 @@ new Vue({
             // remove column after add form
             const addForm = document.getElementsByClassName('addColumn')[idx];
             addForm.style.display = 'none'
+            const _self = this
+            setTimeout(function() {
+                _self.inputChoicesNumber(idx+1)
+            }, 250)
         },
         getInput(){
             const questionLength = document.getElementsByClassName('question_block').length;
