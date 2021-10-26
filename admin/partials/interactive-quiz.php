@@ -460,13 +460,13 @@ wp_enqueue_media();
         </div>
       </div>
 
-      <div class="addColumn flex mt-4 max-w-3xl">
+      <div class="addColumn flex mt-4 w-full">
         <div class="md:w-1/4"></div>
-        <div class="md:w-3/4">
+        <div class="md:w-3/4 flex justify-between">
           <div class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="generateShortcode()">
             <span>Generate Shortcode</span>
           </div>
-          <div class="inline-flex float-right">
+          <div class="inline-flex">
             <div class="bg-gray-300 hover:bg-gray-400 text-gray-800 text-white font-bold py-2 px-4 mr-2 text-base rounded-sm" v-if="quiz.length>1" @click="quiz.pop();question.pop();showResult = false; showColBefore(key)">
               -
             </div>
