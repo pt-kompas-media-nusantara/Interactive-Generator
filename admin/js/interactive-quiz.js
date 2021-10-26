@@ -302,5 +302,11 @@ new Vue({
             // put shortcode to 
 			this.$refs.inputResult.value = shortcode;
         }
-    }
+    },
+    mounted() {
+        this.$nextTick( () => {
+            this.inputChoicesNumber(0)
+            this.updateAnswerCount(0)
+        });
+    },
 })

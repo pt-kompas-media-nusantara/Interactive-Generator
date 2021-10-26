@@ -309,7 +309,7 @@ wp_enqueue_media();
         <div class="w-full relative flex items-center">
           <div class="md:w-1/4 flex justify-end items-center">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
-              Jumlah Pilihan<sup class="text-red-600 font-bold text-sm">*</sup> Jawaban 
+              Jumlah Pilihan<sup class="text-red-600 font-bold text-sm">*</sup><br> Jawaban 
             </label>
           </div>
           <div class="md:w-3/4 flex flex-col relative justify-start">
@@ -333,7 +333,7 @@ wp_enqueue_media();
         <div class="w-full relative flex">
           <div class="md:w-1/4 flex justify-end">
             <label class="block text-gray-800 font-bold md:text-right mb-1 md:mb-0 pr-4 py-4">
-              Jumlah Jawaban<sup class="text-red-600 font-bold text-sm">*</sup> Benar 
+              Jumlah Jawaban<sup class="text-red-600 font-bold text-sm">*</sup><br> Benar 
             </label>
           </div>
           <div class="md:w-3/4 flex relative items-center">
@@ -515,7 +515,10 @@ wp_enqueue_media();
       </label>
     </div>
     <div class="md:w-3/4">
-      <textarea class="inputResult form-textarea appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 text-base" rows="30" name="text" ref="inputResult"></textarea>
+      <textarea class="inputResult form-textarea appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 text-base" rows="20" name="text" ref="inputResult"></textarea>
+      <div class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" @click="saveToDB()">
+        <span>Save to Database</span>
+      </div>
     </div>
   </div>
 </section>
