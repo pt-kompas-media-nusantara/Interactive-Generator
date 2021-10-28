@@ -97,14 +97,20 @@ class Interactive_Generator_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		
 		if ( $hook === 'toplevel_page_interactive-generator' || strpos($hook, 'shortcode-generator') !== false) :
+			$currentScreen = get_current_screen();
+			if ($currentScreen->id === 'shortcode-generator_page_quiz-generator'){
+				wp_enqueue_script('axios', 'https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js', [], '0.24.0', true );	
+				wp_enqueue_script( 'interactive_quiz', plugin_dir_url( __FILE__ ) . 'js/interactive-quiz.js', ['vue'], $this->version, true );
+			}
 			wp_enqueue_script('hgcharts', 'https://code.highcharts.com/highcharts.js', [], '2.6.10', true );
 			wp_enqueue_script('vue', 'https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js', [], '2.6.10', true );
 			
 			wp_enqueue_script( 'interactive_subtitle', plugin_dir_url( __FILE__ ) . 'js/interactive-subtitle.js', ['vue'], $this->version, true );
 			wp_enqueue_script( 'interactive_jumbotron', plugin_dir_url( __FILE__ ) . 'js/interactive-jumbotron.js', ['vue'], $this->version, true );
 			wp_enqueue_script( 'interactive_gallery', plugin_dir_url( __FILE__ ) . 'js/interactive-gallery.js', ['vue'], $this->version, true );
-			wp_enqueue_script( 'interactive_quiz', plugin_dir_url( __FILE__ ) . 'js/interactive-quiz.js', ['vue'], $this->version, true );
+
 			
 			wp_enqueue_script( $this->interactive_generator, plugin_dir_url( __FILE__ ) . 'js/interactive-generator.js', ['vue', 'jquery'], $this->version, true );
 		endif;

@@ -25,7 +25,8 @@ new Vue({
                 url: ''
             },
             quiz: [{ value: '' }],
-            question: []
+            question: [],
+            dbStore: []
         }
     },
     computed: {
@@ -298,16 +299,73 @@ new Vue({
             const shortcode = 
             `[InteractiveQuiz id='${quizId}' cover="{'title': '${this.cover.title}', 'excerpt': '${this.cover.excerpt}', 'thumbnail': '${this.cover.image}', 'button': '${this.cover.button}'}" data="(${data})" external="{ 'title': '${this.external.title}', 'excerpt': '${this.external.excerpt}', 'button': '${this.external.button}', 'url': '${this.external.url}'}" /]`
 
+            this.dbStore = this.question;
+
             // reset array to zero!
             this.question = [];
             // put shortcode to 
 			this.$refs.inputResult.value = shortcode;
+        },
+        saveToDB() {
+            
+            let quizId = this.generateId();
+            // topic
+            const topics = {
+                'quiz_id' : quizId,
+                'title' : this.cover.title,
+                'excerpt' : this.cover.excerpt
+            }
+
+            axios
+                .post('/wp-json/kompas/interactive-quiz/v1/topics', topics) 
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+            
+            let choices='', answers='';
+            for(let i=0;i<this.dbStore.length;i++) {
+                this.dbStore[i].choices.forEach(e => {
+                    choices += `${e.id}.${e.text}, `
+                })
+
+                this.dbStore[i].answer.correct.forEach(k => {
+                    answers += `${k}, `;
+                })
+
+                choices = choices.trimEnd(); // remove last spacing character
+                choices = choices.replace(/.$/, ""); // remove last comma
+                answers = answers.trimEnd(); // remove last spacing character
+                answers = answers.replace(/.$/, ""); // remove last comma
+                
+                const question = {
+                    'quiz_id' : quizId,
+                    'question_id' : i+1, // question id
+                    'type' : this.dbStore[i].type, // question type
+                    'question' : this.dbStore[i].text, // question text
+                    'choices' : choices, // question choice, string of array, ex: "1.Bola, 2.Buku, 3.Karung"
+                    'correct_answer' : answers // correct answer, string of array, ex: "1,3"
+                }
+
+                choices = '';
+                answers = ''
+                axios
+                    .post('/wp-json/kompas/interactive-quiz/v1/questions', question) 
+                    .then((res) => {
+                        console.log(res)
+                    })
+                    .catch((err) => {
+                        console.error(err)
+                    })
+                }
         }
     },
     mounted() {
         this.$nextTick( () => {
             this.inputChoicesNumber(0)
             this.updateAnswerCount(0)
-        });
-    },
+        });   
+    }
 })
